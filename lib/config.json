@@ -1,0 +1,37 @@
+{
+  "splashScreen": {
+    "available": true,
+    "isGif": false,
+    "isVideo": false,
+    "isImage": true,
+    "isLocal": true,
+    "path": "lib/assets/png/splash_2gether.png"
+  },
+  "login": {
+    "available": true,
+    "multipleLogin": false,
+    "isEmail": false,
+    "isPhone": false,
+    "isUsername": false,
+    "isDocument": true,
+    "showRecoveryPassword": true,
+    "showRegister": true,
+    "isAlphanumericPassword": true,
+    "isBirthdayPassword": false
+
+  },
+  "onBoarding": {
+    "available": true,
+    "beforeLogin": false,
+    "afterLogin": true,
+    "afterRegister": false
+  },
+  "register": {
+    "available": true,
+    "isEmailValidation": false,
+    "isPhoneValidation": true
+  },
+  "home": {
+    "available": true
+  }
+}
