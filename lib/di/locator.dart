@@ -13,6 +13,7 @@ import '../repository/app_configuration_service_impl.dart';
 import '../repository/local_service_impl.dart';
 import '../routes/routes_navigator_service.dart';
 import '../routes/routes_navigator_service_impl.dart';
+import '../view_model/home_view_model.dart';
 import '../view_model/initial_loading_view_model.dart';
 import '../view_model/splah_screen_view_model.dart';
 
@@ -27,8 +28,8 @@ Future<void> initializeDI() async {
 void _data() async {
   http.Client _client = http.Client();
   getIt.registerSingleton<http.Client>(_client);
-    getIt.registerSingleton<GetStorage>(GetStorage());
-    getIt.registerSingleton<Local>(DataLocal(getIt()));
+  getIt.registerSingleton<GetStorage>(GetStorage());
+  getIt.registerSingleton<Local>(DataLocal(getIt()));
   getIt.registerSingleton<LocalService>(LocalServiceImpl(getIt.get<Local>()));
   /* getIt.registerSingleton<AppsflyerSdk>(appsflyerSdk); */
 
@@ -51,13 +52,13 @@ void _view() async {
     ),
   );
   getIt.registerFactory<SplashScreenViewModel>(
-    () => SplashScreenViewModel(
-      getIt.get<RoutesNavigatorService>(),
+    () => SplashScreenViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
 
-      getIt.get<LocalService>(),
-   
-      getIt.get<AppConfigurationService>()
-    ),
+  getIt.registerFactory<NewHomeViewModel>(
+    () => NewHomeViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
 
   // VIEW

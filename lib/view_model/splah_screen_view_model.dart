@@ -88,7 +88,9 @@ class SplashScreenViewModel
     }
     gettingData = true;
     //print("getting initial data");
-
+    if (gettingData == true) {
+      gettingData = false;
+    }
     if (/* gifController.value?.value */ (_frame >= 100 &&
             (_configSplashScreen.value.isGif ?? false)) ||
         ((_configSplashScreen.value.isImage ?? false) &&
@@ -150,7 +152,7 @@ class SplashScreenViewModel
         // } else {
         //   _navigatorService.remplaceToNewLogin();
         // }
-        _navigatorService.remplaceToNewLogin();
+        _navigatorService.remplaceAllToHome();
       });
     }
   }
