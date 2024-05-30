@@ -14,6 +14,7 @@ import '../repository/local_service_impl.dart';
 import '../routes/routes_navigator_service.dart';
 import '../routes/routes_navigator_service_impl.dart';
 import '../view_model/home_view_model.dart';
+import '../view_model/image_show_view_model.dart';
 import '../view_model/initial_loading_view_model.dart';
 import '../view_model/splah_screen_view_model.dart';
 
@@ -59,6 +60,10 @@ void _view() async {
   getIt.registerFactory<NewHomeViewModel>(
     () => NewHomeViewModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
+  getIt.registerFactory<ImageShowViewModel>(
+    () => ImageShowViewModel(),
   );
 
   // VIEW

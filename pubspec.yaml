@@ -69,6 +69,7 @@ flutter:
   assets:
   - lib/config.json
   - lib/assets/png/
+  - lib/assets/svg/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
