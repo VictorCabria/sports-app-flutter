@@ -1,7 +1,6 @@
-////import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 
-import 'package:deporte_app_flutter/di/data_local.dart';
-import 'package:deporte_app_flutter/di/local.dart';
+import 'package:deporte_app_flutter/local/data_local.dart';
+import 'package:deporte_app_flutter/local/local.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 

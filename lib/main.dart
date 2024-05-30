@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'di/locator.dart';
+import 'local/locator.dart';
 
 void main() async {
   /* String apiKey =

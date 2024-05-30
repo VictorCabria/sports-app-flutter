@@ -1,4 +1,4 @@
-import '../di/local.dart';
+import '../local/local.dart';
 import '../domain/local_service.dart';
 import '../model/history_page.dart';
 

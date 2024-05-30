@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../di/locator.dart';
+import '../local/locator.dart';
 import '../view_model/image_show_view_model.dart';
 import 'root_widget.dart';
 

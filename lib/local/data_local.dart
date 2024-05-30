@@ -30,8 +30,6 @@ class DataLocal extends Local {
 
   @override
   Future<void> deleteAll() async {
-    //_storage.erase();
-
     _storage.remove('navigatorHistory');
   }
 }

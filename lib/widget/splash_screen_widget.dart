@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:get/get.dart';
 
-import '../../di/locator.dart';
+import '../local/locator.dart';
 import '../view_model/splah_screen_view_model.dart';
 import 'root_widget.dart';
 

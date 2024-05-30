@@ -2,9 +2,10 @@ import 'package:deporte_app_flutter/widget/image_show_widget.dart';
 import 'package:deporte_app_flutter/widget/root_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import '../di/locator.dart';
+import '../local/locator.dart';
 import '../view_model/home_view_model.dart';
 
 class HomeWidget extends LocalRootWidget<NewHomeViewModel> {
@@ -15,6 +16,18 @@ class HomeWidget extends LocalRootWidget<NewHomeViewModel> {
     return withLoading(
         body: Scaffold(
             appBar: CustomAppBar(model: model),
+            body: Obx(() => Container(
+                  color: Colors.grey.shade800,
+                  child: ListView.separated(
+                    itemCount: model.leagues.length,
+                    itemBuilder: (context, index) {
+                      return Text(model.leagues[index].leagueName.toString());
+                    },
+                    separatorBuilder: (context, index) => const Divider(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                )),
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
                 color: Colors.black,
@@ -83,27 +96,38 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: AppBar(
           scrolledUnderElevation: 0,
           automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: () {},
-                child: ImageShowWidget(
-                  isAsset: true,
-                  image: 'lib/assets/svg/arrow_back.svg',
-                  width: 43.dp,
-                  height: 43.dp,
+          title: LayoutBuilder(builder: (context, constraints) {
+            double thresholdWidth = 360.dp;
+            double imageWidth = 213.16.dp;
+            double imageHeight = 33.dp;
+
+            if (constraints.maxWidth < thresholdWidth) {
+              double factor = constraints.maxWidth / thresholdWidth;
+              imageWidth *= factor;
+              imageHeight *= factor;
+            }
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: ImageShowWidget(
+                    isAsset: true,
+                    image: 'lib/assets/svg/arrow_back.svg',
+                    width: 43.dp,
+                    height: 43.dp,
+                  ),
                 ),
-              ),
-              ImageShowWidget(
-                isAsset: true,
-                image: 'lib/assets/png/espn.png',
-                width: 213.16.dp,
-                height: 33.dp,
-              ),
-              SizedBox(width: 48.dp),
-            ],
-          ),
+                ImageShowWidget(
+                  isAsset: true,
+                  image: 'lib/assets/png/espn.png',
+                  width: imageWidth,
+                  height: imageHeight,
+                ),
+                SizedBox(width: 48.dp),
+              ],
+            );
+          }),
           centerTitle: true,
           backgroundColor: Colors.black,
           leadingWidth: 20.dp + 64.dp,
@@ -116,7 +140,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           titleSpacing: 20.dp,
-          
         ),
       ),
     );
