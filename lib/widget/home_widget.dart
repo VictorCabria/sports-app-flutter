@@ -15,13 +15,105 @@ class HomeWidget extends LocalRootWidget<NewHomeViewModel> {
   Widget widget(NewHomeViewModel model, BuildContext context) {
     return withLoading(
         body: Scaffold(
+            backgroundColor: Color.fromARGB(255, 20, 19, 19),
             appBar: CustomAppBar(model: model),
             body: Obx(() => Container(
-                  color: Colors.grey.shade800,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 5.dp, vertical: 5.dp),
                   child: ListView.separated(
                     itemCount: model.leagues.length,
                     itemBuilder: (context, index) {
-                      return Text(model.leagues[index].leagueName.toString());
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.dp)),
+                          color: Color.fromARGB(221, 37, 36, 36),
+                        ),
+                        padding: EdgeInsets.all(10.dp),
+                        height: 250
+                            .dp, // Incrementa la altura para acomodar el nuevo Container
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.network(
+                                  model.leagues[index].leagueLogo ??
+                                      "lib/assets/png/sport.png",
+                                  width: 40.dp,
+                                  height: 40.dp,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                (loadingProgress
+                                                        .expectedTotalBytes ??
+                                                    1)
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Column(
+                                      children: [
+                                        Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                          size: 50.dp,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                SizedBox(
+                                    width: 10
+                                        .dp), // Espacio entre la imagen y el texto
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        model.leagues[index].leagueName
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 16.dp,
+                                            color: Colors.white),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        model.leagues[index].countryName
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 14.dp,
+                                            color: Colors.white),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10.dp),
+                            Container(
+                              height:
+                                  165.dp, // Altura del nuevo Container verde
+                              color: Colors.grey[500],
+                            ),
+                          ],
+                        ),
+                      );
                     },
                     separatorBuilder: (context, index) => const Divider(
                       color: Colors.transparent,
