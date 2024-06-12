@@ -7,7 +7,7 @@ import 'dart:convert';
 
 class PaisesServices extends ChangeNotifier {
   final String _apiKey =
-      '3ca53d2bfb6b0f840e74b8c3df46b4f9e92b981bc6e73c1a799de1c202aa9c8a'; // Reemplaza con tu clave API real
+      '4de38ab4de2775733857e7e2cb969ec1c7d108283fca8e1f08186ffd005d63cb'; // Reemplaza con tu clave API real
   final String _baseUrl = 'apiv2.allsportsapi.com';
 
 

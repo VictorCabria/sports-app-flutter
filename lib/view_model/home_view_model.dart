@@ -52,18 +52,15 @@ class NewHomeViewModel extends RootViewModel
     var result = await leagueServices.fetchleague();
     _leagues.addAll(result);
 
-/*     for (int i = 0; i < result.length; i++) {
+ /*    for (int i = 0; i < result.length; i++) {
       var league = result[i];
       await getstating(league.leagueKey!);
     } */
   }
-
-/*   getstating(int leagueKey) async {
+/* 
+  getstating(int leagueKey) async {
     var result = await clasificacionServices.fetchStanding(leagueKey);
-
-    if (result.result.home.isNotEmpty) {
-      _standing.add(result.result.home.first);
-    }
+    _standing.add(result.result as Standing);
   } */
 
   void onMenuChanged(int index) {
