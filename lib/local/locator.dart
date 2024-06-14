@@ -1,4 +1,3 @@
-
 import 'package:deporte_app_flutter/local/data_local.dart';
 import 'package:deporte_app_flutter/local/local.dart';
 import 'package:get_it/get_it.dart';
@@ -13,9 +12,13 @@ import '../repository/local_service_impl.dart';
 import '../routes/routes_navigator_service.dart';
 import '../routes/routes_navigator_service_impl.dart';
 import '../view_model/home_view_model.dart';
+import '../view_model/leagues_view_model.dart';
 import '../view_model/image_show_view_model.dart';
 import '../view_model/initial_loading_view_model.dart';
+import '../view_model/results_view_model.dart';
+import '../view_model/scorers_view_model.dart';
 import '../view_model/splah_screen_view_model.dart';
+import '../view_model/user_profile_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -56,14 +59,32 @@ void _view() async {
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
 
+  getIt.registerFactory<NewLeaguesWidgetViewModel>(
+    () => NewLeaguesWidgetViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
   getIt.registerFactory<NewHomeViewModel>(
     () => NewHomeViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
+  getIt.registerFactory<UserProfileModel>(
+    () => UserProfileModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
+  getIt.registerFactory<ResultsModel>(
+    () => ResultsModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
+  getIt.registerFactory<ScorersModel>(
+    () => ScorersModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
 
   getIt.registerFactory<ImageShowViewModel>(
     () => ImageShowViewModel(),
   );
-
-  // VIEW
 }
