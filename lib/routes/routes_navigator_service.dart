@@ -7,6 +7,7 @@ abstract class RoutesNavigatorService {
   Future<void> closeApp();
   Future<void> remplaceAllToSplash();
   Future<void> remplaceAllToHome();
+  Future<void> remplaceAllTologin();
 
   String get initialRoute;
   String get getInitialLoading;

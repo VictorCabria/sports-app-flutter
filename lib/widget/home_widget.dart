@@ -26,7 +26,6 @@ class HomeWidget extends LocalRootWidget<NewHomeViewModel> {
                 children: [
                   LeaguesWidget(),
                   ResultsWidget(),
-                  ScorersWidget(),
                   UserProfileWidget(),
                 ],
               ),
@@ -57,10 +56,6 @@ class HomeWidget extends LocalRootWidget<NewHomeViewModel> {
                   GButton(
                     icon: Icons.thirty_fps_select_sharp,
                     text: 'Resultados',
-                  ),
-                  GButton(
-                    icon: Icons.account_box,
-                    text: 'Goleadores',
                   ),
                   GButton(
                     icon: Icons.account_circle_rounded,

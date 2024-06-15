@@ -152,7 +152,7 @@ class SplashScreenViewModel
         // } else {
         //   _navigatorService.remplaceToNewLogin();
         // }
-        _navigatorService.remplaceAllToHome();
+        _navigatorService.remplaceAllTologin();
       });
     }
   }

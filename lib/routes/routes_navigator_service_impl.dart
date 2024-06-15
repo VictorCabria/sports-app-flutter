@@ -1,5 +1,6 @@
 import 'package:deporte_app_flutter/widget/home_widget.dart';
 import 'package:deporte_app_flutter/widget/leagues_widget.dart';
+import 'package:deporte_app_flutter/widget/login_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -79,9 +80,18 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
           ),
         ],
       ),
-       GetPage(
+      GetPage(
         name: _home,
         page: () => HomeWidget(),
+        middlewares: [
+          DataMiddleware(
+            this,
+          ),
+        ],
+      ),
+      GetPage(
+        name: _login,
+        page: () => LoginWidget(),
         middlewares: [
           DataMiddleware(
             this,
@@ -102,6 +112,7 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
   static const _splashScreen = '/splashScreen';
   static const _leagues = '/leagues';
   static const _home = '/home';
+  static const _login = '/Login';
   static const _userprofile = '/userprofile';
 
   List<GetPage> routes = [];
@@ -150,16 +161,24 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
     Get.offAllNamed(_splashScreen);
   }
 
-
-    @override
+  @override
   Future<void> remplaceAllToHome() async {
     _navigatorHistory.clear();
     _navigatorHistory.add(HistoryPage(route: _home));
     _localService.setNavigatorHistory(_navigatorHistory);
     Get.offAllNamed(_home);
   }
-
+    @override
+  Future<void> remplaceAllTologin() async {
+    _navigatorHistory.clear();
+    _navigatorHistory.add(HistoryPage(route: _login));
+    _localService.setNavigatorHistory(_navigatorHistory);
+    Get.offAllNamed(_login);
+  }
 }
+
+
+
 
 // middlewares
 

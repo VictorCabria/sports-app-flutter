@@ -1,5 +1,6 @@
 import 'package:deporte_app_flutter/view_model/root_view_model.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../domain/local_service.dart';
 import '../repository/app_configuration_service.dart';
@@ -20,4 +21,10 @@ class UserProfileModel extends RootViewModel {
 
   @override
   initialize() {}
+
+  Future<void> launurlreds(Uri url) async {
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 }

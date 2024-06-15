@@ -38,7 +38,7 @@ class NewLeaguesWidgetViewModel extends RootViewModel
   }
 
   getleague() async {
-    var result = await leagueServices.fetchleague();
+    var result = await leagueServices.fetchLeague();
     _leagues.addAll(result);
   }
 }

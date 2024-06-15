@@ -15,6 +15,7 @@ import '../view_model/home_view_model.dart';
 import '../view_model/leagues_view_model.dart';
 import '../view_model/image_show_view_model.dart';
 import '../view_model/initial_loading_view_model.dart';
+import '../view_model/login_view_model.dart';
 import '../view_model/results_view_model.dart';
 import '../view_model/scorers_view_model.dart';
 import '../view_model/splah_screen_view_model.dart';
@@ -59,6 +60,10 @@ void _view() async {
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
 
+  getIt.registerFactory<LoginWidgetModel>(
+    () => LoginWidgetModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
   getIt.registerFactory<NewLeaguesWidgetViewModel>(
     () => NewLeaguesWidgetViewModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
