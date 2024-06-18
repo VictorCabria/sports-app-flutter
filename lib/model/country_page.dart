@@ -1,4 +1,4 @@
-import 'package:deporte_app_flutter/model/country.dart';
+import 'package:deporte_app_flutter/model/configs/country.dart';
 
 class PaisesResponse {
    int? success;

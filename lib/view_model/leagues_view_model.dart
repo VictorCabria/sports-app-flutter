@@ -1,8 +1,8 @@
-import 'package:deporte_app_flutter/model/clasificacion.dart';
-import 'package:deporte_app_flutter/model/league.dart';
+import 'package:deporte_app_flutter/model/configs/clasificacion.dart';
+import 'package:deporte_app_flutter/model/configs/league.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../model/country.dart';
+import '../model/configs/country.dart';
 import '../services/clasificacion_services.dart';
 import '../services/ligas_services.dart';
 import '../services/paises_services.dart';

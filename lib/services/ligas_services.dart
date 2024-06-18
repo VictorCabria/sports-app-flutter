@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../model/league.dart';
+import '../model/configs/league.dart';
 import '../model/league_page.dart';
 
 class LeagueServices extends ChangeNotifier {

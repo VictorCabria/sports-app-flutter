@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../model/clasificacion.dart';
+import '../model/configs/clasificacion.dart';
 import '../model/clasificacion_page.dart';
-import '../model/league.dart';
+import '../model/configs/league.dart';
 import '../model/league_page.dart';
 
 class ClasificacionServices extends ChangeNotifier {

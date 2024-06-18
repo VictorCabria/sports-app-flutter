@@ -1,4 +1,4 @@
-import 'package:deporte_app_flutter/model/clasificacion.dart';
+import 'package:deporte_app_flutter/model/configs/clasificacion.dart';
 
 class StandingResponse {
   final int success;

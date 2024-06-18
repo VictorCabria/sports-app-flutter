@@ -1,4 +1,4 @@
-import 'package:deporte_app_flutter/model/league.dart';
+import 'package:deporte_app_flutter/model/configs/league.dart';
 
 class LeagueResponse {
   final int success;
