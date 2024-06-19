@@ -21,8 +21,8 @@ class ResultsModel extends RootViewModel {
   }
 
   final RxList<Resultlive> _liveresult = <Resultlive>[].obs;
-  var groupedResults = <String, List<Resultlive>>{}.obs;
-
+  RxList<Map<String, dynamic>> categorizedResults =
+      <Map<String, dynamic>>[].obs;
   // Getters
   List<Resultlive> get liveresult => _liveresult;
 
@@ -32,9 +32,19 @@ class ResultsModel extends RootViewModel {
   }
 
   getresult() async {
-    var result = await resultliveServices.fetchresultlive();
-    print(result);
-    _liveresult.addAll(result);
-    print(_liveresult.length);
+    var results = await resultliveServices.fetchresultlive();
+    Map<String, List<Resultlive>> groupedResults = {};
+    for (var result in results) {
+      if (!groupedResults.containsKey(result.leagueName!)) {
+        groupedResults[result.leagueName!] = [];
+      }
+      groupedResults[result.leagueName!]!.add(result);
+    }
+    categorizedResults.value = groupedResults.entries.map((entry) {
+      return {
+        'leagueName': entry.key,
+        'results': entry.value,
+      };
+    }).toList();
   }
 }

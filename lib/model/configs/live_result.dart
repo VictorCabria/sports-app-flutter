@@ -7,7 +7,7 @@ class Resultlive {
   final String? eventAwayTeam;
   final int? awayTeamKey;
   final String? eventHalftimeResult;
-  final String?eventFinalResult;
+  final String? eventFinalResult;
   final String? eventFtResult;
   final String? eventPenaltyResult;
   final String? eventStatus;
@@ -22,7 +22,7 @@ class Resultlive {
   final String? homeTeamLogo;
   final String? awayTeamLogo;
   final String? eventHomeFormation;
-   final String? eventAwayFormation;
+  final String? eventAwayFormation;
   final int? fkStageKey;
   final String? stageName;
   final String? leagueGroup;
@@ -34,33 +34,33 @@ class Resultlive {
   final List<Statistic>? statistics;  */
 
   Resultlive({
-    required this.eventKey,
-    required this.eventDate,
-    required this.eventTime,
-    required this.eventHomeTeam,
-    required this.homeTeamKey,
-    required this.eventAwayTeam,
-    required this.awayTeamKey,
-    required this.eventHalftimeResult,
-    required this.eventFinalResult,
-    required this.eventFtResult,
-    required this.eventPenaltyResult,
-    required this.eventStatus,
-    required this.countryName,
-    required this.leagueName,
-    required this.leagueKey,
-    required this.leagueRound,
-    required this.leagueSeason,
-    required this.eventLive,
-    required this.eventStadium,
-    required this.eventReferee,
-    required this.homeTeamLogo,
-    required this.awayTeamLogo,
-    required this.eventHomeFormation,
-     required this.eventAwayFormation,
-    required this.fkStageKey,
-    required this.stageName,
-    required this.leagueGroup,
+    this.eventKey,
+    this.eventDate,
+    this.eventTime,
+    this.eventHomeTeam,
+    this.homeTeamKey,
+    this.eventAwayTeam,
+    this.awayTeamKey,
+    this.eventHalftimeResult,
+    this.eventFinalResult,
+    this.eventFtResult,
+    this.eventPenaltyResult,
+    this.eventStatus,
+    this.countryName,
+    this.leagueName,
+    this.leagueKey,
+    this.leagueRound,
+    this.leagueSeason,
+    this.eventLive,
+    this.eventStadium,
+    this.eventReferee,
+    this.homeTeamLogo,
+    this.awayTeamLogo,
+    this.eventHomeFormation,
+    this.eventAwayFormation,
+    this.fkStageKey,
+    this.stageName,
+    this.leagueGroup,
     /* required this.goalscorers,
      required this.substitutes, 
        required this.cards,  
@@ -96,7 +96,7 @@ class Resultlive {
       eventHomeFormation: json['event_home_formation'],
       eventAwayFormation: json['event_away_formation'],
       fkStageKey: json['fk_stage_key'],
-       stageName: json['stage_name'],
+      stageName: json['stage_name'],
       leagueGroup: json['league_group'],
       /* goalscorers: (json['goalscorers'] as List).map((i) => GoalScorer.fromJson(i)).toList(),
         substitutes: (json['substitutes'] as List).map((i) => Substitute.fromJson(i)).toList(), 
@@ -132,16 +132,16 @@ class Resultlive {
       'home_team_logo': homeTeamLogo,
       'away_team_logo': awayTeamLogo,
       'event_home_formation': eventHomeFormation,
-       'event_away_formation': eventAwayFormation,
+      'event_away_formation': eventAwayFormation,
       'fk_stage_key': fkStageKey,
       'stage_name': stageName,
       'league_group': leagueGroup,
-     /*  'goalscorers': goalscorers?.map((i) => i.toJson()).toList(),
+      /*  'goalscorers': goalscorers?.map((i) => i.toJson()).toList(),
         'substitutes': substitutes?.map((i) => i.toJson()).toList(), 
       'cards': cards?.map((i) => i.toJson()).toList(), 
        'vars': vars?.toJson(),
       'lineups': lineups?.toJson(),
-      'statistics': statistics?.map((i) => i.toJson()).toList(), */  
+      'statistics': statistics?.map((i) => i.toJson()).toList(), */
     };
   }
 }
@@ -237,7 +237,9 @@ class Substitute {
       homeScorer: Substitution.fromJson(json['home_scorer']),
       homeAssist: json['home_assist'],
       score: json['score'],
-      awayScorer: (json['away_scorer'] as List).map((i) => Substitution.fromJson(i)).toList(),
+      awayScorer: (json['away_scorer'] as List)
+          .map((i) => Substitution.fromJson(i))
+          .toList(),
       awayAssist: json['away_assist'],
       info: json['info'],
       infoTime: json['info_time'],
@@ -421,8 +423,10 @@ class Lineups {
 
   factory Lineups.fromJson(Map<String, dynamic> json) {
     return Lineups(
-      homeTeam: (json['home_team'] as List).map((i) => Player.fromJson(i)).toList(),
-      awayTeam: (json['away_team'] as List).map((i) => Player.fromJson(i)).toList(),
+      homeTeam:
+          (json['home_team'] as List).map((i) => Player.fromJson(i)).toList(),
+      awayTeam:
+          (json['away_team'] as List).map((i) => Player.fromJson(i)).toList(),
     );
   }
 

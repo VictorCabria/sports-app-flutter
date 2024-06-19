@@ -18,6 +18,7 @@ import 'local/locator.dart';
 
 void main() async {
   /* String apiKey =
+  
       const String.fromEnvironment('varGoogleMapsApiKey', defaultValue: '');
   _getModifiedIndexHtml(apiKey); */
   WidgetsFlutterBinding.ensureInitialized();
