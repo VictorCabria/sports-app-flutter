@@ -20,6 +20,8 @@ import '../view_model/login_view_model.dart';
 import '../view_model/results_view_model.dart';
 import '../view_model/scorers_view_model.dart';
 import '../view_model/splah_screen_view_model.dart';
+import '../view_model/tablineups_view_model.dart';
+import '../view_model/tabstatistics_view_model.dart';
 import '../view_model/user_profile_view_model.dart';
 
 final getIt = GetIt.instance;
@@ -96,6 +98,15 @@ void _view() async {
 
     getIt.registerFactory<NewInforesultModel>(
     () => NewInforesultModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
+    getIt.registerFactory<TabStatisticsViewModel>(
+    () => TabStatisticsViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+  getIt.registerFactory<TabLineupsViewModel>(
+    () => TabLineupsViewModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
 }

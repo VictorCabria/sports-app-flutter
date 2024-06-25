@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-import '../model/configs/live_result.dart';
+import '../model/configs/fixtures.dart';
 
 abstract class RoutesNavigatorService {
   Future<void> toInitial();
@@ -10,7 +10,7 @@ abstract class RoutesNavigatorService {
   Future<void> remplaceAllToSplash();
   Future<void> remplaceAllToHome();
   Future<void> remplaceAllTologin();
-  Future<void> toInfoResult(Resultlive resultlive);
+  Future<void> toInfoResult(Fixtures fixtures);
   Future<void> toBack();
 
   String get initialRoute;

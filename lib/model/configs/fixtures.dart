@@ -1,4 +1,4 @@
-class Resultlive {
+class Fixtures {
   final int? eventKey;
   final String? eventDate;
   final String? eventTime;
@@ -26,14 +26,14 @@ class Resultlive {
   final int? fkStageKey;
   final String? stageName;
   final String? leagueGroup;
-  /*  final List<GoalScorer>? goalscorers;
-   final List<Substitute>? substitutes; 
+  final List<GoalScorer>? goalscorers;
+  final List<Statistic>? statistics;
+  /* final List<Substitute>? substitutes; 
      final List<Card>? cards;  
    final Vars? vars;
-  final Lineups? lineups;
-  final List<Statistic>? statistics;  */
+  final Lineups? lineups;  */
 
-  Resultlive({
+  Fixtures({
     this.eventKey,
     this.eventDate,
     this.eventTime,
@@ -61,16 +61,17 @@ class Resultlive {
     this.fkStageKey,
     this.stageName,
     this.leagueGroup,
-    /* required this.goalscorers,
-     required this.substitutes, 
+    this.goalscorers,
+    this.statistics,
+    /*  required this.substitutes, 
        required this.cards,  
      required this.vars,
     required this.lineups,
     required this.statistics,   */
   });
 
-  factory Resultlive.fromJson(Map<String, dynamic> json) {
-    return Resultlive(
+  factory Fixtures.fromJson(Map<String, dynamic> json) {
+    return Fixtures(
       eventKey: json['event_key'],
       eventDate: json['event_date'],
       eventTime: json['event_time'],
@@ -98,12 +99,16 @@ class Resultlive {
       fkStageKey: json['fk_stage_key'],
       stageName: json['stage_name'],
       leagueGroup: json['league_group'],
-      /* goalscorers: (json['goalscorers'] as List).map((i) => GoalScorer.fromJson(i)).toList(),
-        substitutes: (json['substitutes'] as List).map((i) => Substitute.fromJson(i)).toList(), 
+      goalscorers: (json['goalscorers'] as List)
+          .map((i) => GoalScorer.fromJson(i))
+          .toList(),
+      statistics: (json['statistics'] as List)
+          .map((i) => Statistic.fromJson(i))
+          .toList(),
+      /*   substitutes: (json['substitutes'] as List).map((i) => Substitute.fromJson(i)).toList(), 
        cards: (json['cards'] as List).map((i) => Card.fromJson(i)).toList(), 
        vars: Vars.fromJson(json['vars']),
-      lineups: Lineups.fromJson(json['lineups']),
-      statistics: (json['statistics'] as List).map((i) => Statistic.fromJson(i)).toList(),   */
+      lineups: Lineups.fromJson(json['lineups']),  */
     );
   }
 
@@ -136,12 +141,12 @@ class Resultlive {
       'fk_stage_key': fkStageKey,
       'stage_name': stageName,
       'league_group': leagueGroup,
-      /*  'goalscorers': goalscorers?.map((i) => i.toJson()).toList(),
-        'substitutes': substitutes?.map((i) => i.toJson()).toList(), 
+      'goalscorers': goalscorers?.map((i) => i.toJson()).toList(),
+      'statistics': statistics?.map((i) => i.toJson()).toList(),
+      /*  'substitutes': substitutes?.map((i) => i.toJson()).toList(), 
       'cards': cards?.map((i) => i.toJson()).toList(), 
        'vars': vars?.toJson(),
-      'lineups': lineups?.toJson(),
-      'statistics': statistics?.map((i) => i.toJson()).toList(), */
+      'lineups': lineups?.toJson(), */
     };
   }
 }

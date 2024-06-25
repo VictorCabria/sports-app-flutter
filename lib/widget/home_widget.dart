@@ -2,7 +2,6 @@ import 'package:deporte_app_flutter/local/locator.dart';
 import 'package:deporte_app_flutter/widget/leagues_widget.dart';
 import 'package:deporte_app_flutter/widget/results_widget.dart';
 import 'package:deporte_app_flutter/widget/root_widget.dart';
-import 'package:deporte_app_flutter/widget/scorers_widget.dart';
 import 'package:deporte_app_flutter/widget/user_profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';

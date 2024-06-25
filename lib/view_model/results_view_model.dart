@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 
 import '../domain/local_service.dart';
-import '../model/configs/live_result.dart';
+import '../model/configs/fixtures.dart';
 import '../repository/app_configuration_service.dart';
 import '../routes/routes_navigator_service.dart';
-import '../services/result_live_services.dart';
+import '../services/fixtures_services.dart';
 
 class ResultsModel extends RootViewModel {
   final RoutesNavigatorService _navigatorService;
@@ -21,12 +21,12 @@ class ResultsModel extends RootViewModel {
     initialize();
   }
 
-  final RxList<Resultlive> _liveresult = <Resultlive>[].obs;
+  final RxList<Fixtures> _liveresult = <Fixtures>[].obs;
   final RxString _errorMessage = ''.obs;
   RxList<Map<String, dynamic>> categorizedResults =
       <Map<String, dynamic>>[].obs;
   // Getters
-  List<Resultlive> get liveresult => _liveresult;
+  List<Fixtures> get liveresult => _liveresult;
   RxString get errorMessage => _errorMessage;
 
   @override
@@ -35,9 +35,10 @@ class ResultsModel extends RootViewModel {
   }
 
   getresult() async {
+    
     try {
-      var results = await resultliveServices.fetchresultlive();
-      Map<String, List<Resultlive>> groupedResults = {};
+      var results = await fixturesServices.fetchresultlive();
+      Map<String, List<Fixtures>> groupedResults = {};
       for (var result in results) {
         if (!groupedResults.containsKey(result.leagueName!)) {
           groupedResults[result.leagueName!] = [];
@@ -55,7 +56,7 @@ class ResultsModel extends RootViewModel {
     }
   }
 
-  void inforesult(Resultlive resultlive) {
+  void inforesult(Fixtures resultlive) {
     _navigatorService.toInfoResult(resultlive);
   }
 }

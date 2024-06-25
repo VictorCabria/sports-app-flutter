@@ -1,4 +1,4 @@
-import 'package:deporte_app_flutter/model/configs/live_result.dart';
+import 'package:deporte_app_flutter/model/configs/fixtures.dart';
 import 'package:deporte_app_flutter/widget/home_widget.dart';
 import 'package:deporte_app_flutter/widget/leagues_widget.dart';
 import 'package:deporte_app_flutter/widget/login_widget.dart';
@@ -194,10 +194,10 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
   }
 
   @override
-  Future<void> toInfoResult(Resultlive resultlive) async {
+  Future<void> toInfoResult(Fixtures fixtures) async {
     _navigatorHistory.add(HistoryPage(route: _resultinfo));
     _localService.setNavigatorHistory(_navigatorHistory);
-    Get.toNamed(_resultinfo, arguments: resultlive);
+    Get.toNamed(_resultinfo, arguments: fixtures);
   }
 }
 

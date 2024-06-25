@@ -5,7 +5,7 @@ import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:get/get.dart';
 
 import '../local/locator.dart';
-import '../model/configs/live_result.dart';
+import '../model/configs/fixtures.dart';
 import '../view_model/results_view_model.dart';
 import '../view_model/user_profile_view_model.dart';
 
@@ -34,7 +34,7 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
               itemBuilder: (context, index) {
                 var category = model.categorizedResults[index];
                 var leagueName = category['leagueName'];
-                var results = category['results'] as List<Resultlive>;
+                var results = category['results'] as List<Fixtures>;
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.dp)),
@@ -72,7 +72,7 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: results.length,
                         itemBuilder: (context, idx) {
-                          Resultlive result = results[idx];
+                          Fixtures result = results[idx];
                           return InkWell(
                               onTap: () => model.inforesult(result),
                               child: Column(
@@ -164,7 +164,7 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                                         ),
                                         SizedBox(width: 15.dp),
                                         Text(
-                                          result.eventHalftimeResult ?? "0 - 0",
+                                          result.eventFinalResult ?? "0 - 0",
                                           style: TextStyle(
                                               fontSize: 12.dp,
                                               color: Colors.white),
