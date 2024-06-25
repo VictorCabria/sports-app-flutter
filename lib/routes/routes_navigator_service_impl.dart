@@ -1,3 +1,4 @@
+import 'package:deporte_app_flutter/model/configs/live_result.dart';
 import 'package:deporte_app_flutter/widget/home_widget.dart';
 import 'package:deporte_app_flutter/widget/leagues_widget.dart';
 import 'package:deporte_app_flutter/widget/login_widget.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../domain/local_service.dart';
 import '../model/history_page.dart';
+import '../widget/info_resullt_widget.dart';
 import '../widget/initial_loading.dart';
 import '../widget/splash_screen_widget.dart';
 import '../widget/user_profile_widget.dart';
@@ -98,6 +100,15 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
           ),
         ],
       ),
+      GetPage(
+        name: _resultinfo,
+        page: () => InfoResultWidget(),
+        middlewares: [
+          DataMiddleware(
+            this,
+          ),
+        ],
+      ),
     ];
   }
 
@@ -114,6 +125,7 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
   static const _home = '/home';
   static const _login = '/Login';
   static const _userprofile = '/userprofile';
+  static const _resultinfo = '/resultinfo';
 
   List<GetPage> routes = [];
 
@@ -160,6 +172,10 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
     _localService.setNavigatorHistory(_navigatorHistory);
     Get.offAllNamed(_splashScreen);
   }
+    @override
+  Future<void> toBack() async {
+    Get.back();
+  }
 
   @override
   Future<void> remplaceAllToHome() async {
@@ -168,17 +184,22 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
     _localService.setNavigatorHistory(_navigatorHistory);
     Get.offAllNamed(_home);
   }
-    @override
+
+  @override
   Future<void> remplaceAllTologin() async {
     _navigatorHistory.clear();
     _navigatorHistory.add(HistoryPage(route: _login));
     _localService.setNavigatorHistory(_navigatorHistory);
     Get.offAllNamed(_login);
   }
+
+  @override
+  Future<void> toInfoResult(Resultlive resultlive) async {
+    _navigatorHistory.add(HistoryPage(route: _resultinfo));
+    _localService.setNavigatorHistory(_navigatorHistory);
+    Get.toNamed(_resultinfo, arguments: resultlive);
+  }
 }
-
-
-
 
 // middlewares
 

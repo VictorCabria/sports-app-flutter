@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
+import '../model/configs/live_result.dart';
+
 abstract class RoutesNavigatorService {
   Future<void> toInitial();
   Future<void> closeApp();
   Future<void> remplaceAllToSplash();
   Future<void> remplaceAllToHome();
   Future<void> remplaceAllTologin();
+  Future<void> toInfoResult(Resultlive resultlive);
+  Future<void> toBack();
 
   String get initialRoute;
   String get getInitialLoading;

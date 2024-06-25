@@ -26,6 +26,7 @@ class ResultliveServices extends ChangeNotifier {
     }
   }
 
+// lista resulados en vivo
   Future<List<Resultlive>> fetchresultlive() async {
     final jsonData = await _getJsonData('Livescore');
     final Map<String, dynamic> decodedData = json.decode(jsonData);

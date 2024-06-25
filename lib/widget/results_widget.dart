@@ -18,8 +18,16 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
       body: Scaffold(
         backgroundColor: const Color(0xFF121212),
         appBar: CustomAppBar(model: model),
-        body: Obx(
-          () => Container(
+        body: Obx(() {
+          if (model.categorizedResults.isEmpty) {
+            return Center(
+              child: Text(
+                'No hay partidos en estos momentos',
+                style: TextStyle(fontSize: 16.dp, color: Colors.white),
+              ),
+            );
+          }
+          return Container(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: ListView.separated(
               itemCount: model.categorizedResults.length,
@@ -65,160 +73,169 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                         itemCount: results.length,
                         itemBuilder: (context, idx) {
                           Resultlive result = results[idx];
-                          return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Divider(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                          return InkWell(
+                              onTap: () => model.inforesult(result),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      result.stageName ?? "Pendiente",
-                                      style: TextStyle(
-                                          fontSize: 12.dp, color: Colors.white),
+                                    const Divider(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          result.stageName ?? "Pendiente",
+                                          style: TextStyle(
+                                              fontSize: 12.dp,
+                                              color: Colors.white),
+                                        ),
+                                        Text(
+                                          result.eventTime ?? "Pendiente",
+                                          style: TextStyle(
+                                              fontSize: 12.dp,
+                                              color: Colors.white),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      result.eventTime ?? "Pendiente",
-                                      style: TextStyle(
-                                          fontSize: 12.dp, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10.dp),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Image.network(
-                                            result.homeTeamLogo ??
-                                                "lib/assets/png/sport.png",
-                                            width: 30.dp,
-                                            height: 30.dp,
-                                            loadingBuilder:
-                                                (BuildContext context,
-                                                    Widget child,
-                                                    ImageChunkEvent?
-                                                        loadingProgress) {
-                                              if (loadingProgress == null)
-                                                return child;
-                                              return Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  value: loadingProgress
-                                                              .expectedTotalBytes !=
-                                                          null
-                                                      ? loadingProgress
-                                                              .cumulativeBytesLoaded /
-                                                          (loadingProgress
-                                                                  .expectedTotalBytes ??
-                                                              1)
-                                                      : null,
+                                    SizedBox(height: 10.dp),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              Image.network(
+                                                result.homeTeamLogo ??
+                                                    "lib/assets/png/sport.png",
+                                                width: 30.dp,
+                                                height: 30.dp,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            loadingProgress) {
+                                                  if (loadingProgress == null)
+                                                    return child;
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              (loadingProgress
+                                                                      .expectedTotalBytes ??
+                                                                  1)
+                                                          : null,
+                                                    ),
+                                                  );
+                                                },
+                                                errorBuilder: (BuildContext
+                                                        context,
+                                                    Object exception,
+                                                    StackTrace? stackTrace) {
+                                                  return Column(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.error,
+                                                        color: Colors.red,
+                                                        size: 50.dp,
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                              SizedBox(width: 5.dp),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  result.eventHomeTeam ?? "",
+                                                  style: TextStyle(
+                                                      fontSize: 12.dp,
+                                                      color: Colors.white),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
-                                              );
-                                            },
-                                            errorBuilder: (BuildContext context,
-                                                Object exception,
-                                                StackTrace? stackTrace) {
-                                              return Column(
-                                                children: [
-                                                  Icon(
-                                                    Icons.error,
-                                                    color: Colors.red,
-                                                    size: 50.dp,
-                                                  ),
-                                                ],
-                                              );
-                                            },
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(width: 5.dp),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              result.eventHomeTeam ?? "",
-                                              style: TextStyle(
-                                                  fontSize: 12.dp,
-                                                  color: Colors.white),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(width: 15.dp),
-                                    Text(
-                                      result.eventHalftimeResult ?? "0 - 0",
-                                      style: TextStyle(
-                                          fontSize: 12.dp, color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(width: 15.dp),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              result.eventAwayTeam ?? "",
-                                              style: TextStyle(
-                                                  fontSize: 12.dp,
-                                                  color: Colors.white),
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.end,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5.dp),
-                                          Image.network(
-                                            result.awayTeamLogo ??
-                                                "lib/assets/png/sport.png",
-                                            width: 30.dp,
-                                            height: 30.dp,
-                                            loadingBuilder:
-                                                (BuildContext context,
-                                                    Widget child,
-                                                    ImageChunkEvent?
-                                                        loadingProgress) {
-                                              if (loadingProgress == null)
-                                                return child;
-                                              return Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  value: loadingProgress
-                                                              .expectedTotalBytes !=
-                                                          null
-                                                      ? loadingProgress
-                                                              .cumulativeBytesLoaded /
-                                                          (loadingProgress
-                                                                  .expectedTotalBytes ??
-                                                              1)
-                                                      : null,
+                                        ),
+                                        SizedBox(width: 15.dp),
+                                        Text(
+                                          result.eventHalftimeResult ?? "0 - 0",
+                                          style: TextStyle(
+                                              fontSize: 12.dp,
+                                              color: Colors.white),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(width: 15.dp),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  result.eventAwayTeam ?? "",
+                                                  style: TextStyle(
+                                                      fontSize: 12.dp,
+                                                      color: Colors.white),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.end,
                                                 ),
-                                              );
-                                            },
-                                            errorBuilder: (BuildContext context,
-                                                Object exception,
-                                                StackTrace? stackTrace) {
-                                              return Column(
-                                                children: [
-                                                  Icon(
-                                                    Icons.error,
-                                                    color: Colors.red,
-                                                    size: 50.dp,
-                                                  ),
-                                                ],
-                                              );
-                                            },
+                                              ),
+                                              SizedBox(width: 5.dp),
+                                              Image.network(
+                                                result.awayTeamLogo ??
+                                                    "lib/assets/png/sport.png",
+                                                width: 30.dp,
+                                                height: 30.dp,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            loadingProgress) {
+                                                  if (loadingProgress == null)
+                                                    return child;
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              (loadingProgress
+                                                                      .expectedTotalBytes ??
+                                                                  1)
+                                                          : null,
+                                                    ),
+                                                  );
+                                                },
+                                                errorBuilder: (BuildContext
+                                                        context,
+                                                    Object exception,
+                                                    StackTrace? stackTrace) {
+                                                  return Column(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.error,
+                                                        color: Colors.red,
+                                                        size: 50.dp,
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ]);
+                                        ),
+                                      ],
+                                    )
+                                  ]));
                         },
                       ),
                     ],
@@ -229,235 +246,8 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                 color: Colors.transparent,
               ),
             ),
-
-            /* ListView.separated(
-              itemCount: model.liveresult.length,
-              itemBuilder: (context, index) {
-                return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.dp)),
-                      color: const Color(0xFF1D1E20),
-                    ),
-                    padding: EdgeInsets.all(10.dp),
-                    height: 165.dp,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  model.liveresult[index].leagueName ??
-                                      "Competencia",
-                                  style: TextStyle(
-                                      fontSize: 16.dp, color: Colors.white),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Ver todo',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                model.liveresult[index].stageName ??
-                                    "Pendiente",
-                                style: TextStyle(
-                                    fontSize: 12.dp, color: Colors.white),
-                              ),
-                              Text(
-                                model.liveresult[index].eventTime ??
-                                    "Pendiente",
-                                style: TextStyle(
-                                    fontSize: 12.dp, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8.dp),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "lib/assets/png/barcelona.png",
-                                    width: 30.dp,
-                                    height: 30.dp,
-                                  ),
-                                  SizedBox(width: 5.dp),
-                                  Text(
-                                    "Barcelona",
-                                    style: TextStyle(
-                                        fontSize: 12.dp, color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "VS",
-                                style: TextStyle(
-                                    fontSize: 12.dp, color: Colors.white),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Real Madrid",
-                                    style: TextStyle(
-                                        fontSize: 12.dp, color: Colors.white),
-                                  ),
-                                  SizedBox(width: 5.dp),
-                                  Image.asset(
-                                    "lib/assets/png/barcelona.png",
-                                    width: 30.dp,
-                                    height: 30.dp,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Image.network(
-                                      model.liveresult[index].homeTeamLogo ??
-                                          "lib/assets/png/sport.png",
-                                      width: 30.dp,
-                                      height: 30.dp,
-                                      loadingBuilder: (BuildContext context,
-                                          Widget child,
-                                          ImageChunkEvent? loadingProgress) {
-                                        if (loadingProgress == null)
-                                          return child;
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    (loadingProgress
-                                                            .expectedTotalBytes ??
-                                                        1)
-                                                : null,
-                                          ),
-                                        );
-                                      },
-                                      errorBuilder: (BuildContext context,
-                                          Object exception,
-                                          StackTrace? stackTrace) {
-                                        return Column(
-                                          children: [
-                                            Icon(
-                                              Icons.error,
-                                              color: Colors.red,
-                                              size: 50.dp,
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(width: 5.dp),
-                                    Expanded(
-                                      child: Text(
-                                        model.liveresult[index].eventHomeTeam ??
-                                            "",
-                                        style: TextStyle(
-                                            fontSize: 12.dp,
-                                            color: Colors.white),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                model.liveresult[index].eventHalftimeResult ??
-                                    "0 - 0",
-                                style: TextStyle(
-                                    fontSize: 12.dp, color: Colors.white),
-                                textAlign: TextAlign.center,
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        model.liveresult[index].eventAwayTeam ??
-                                            "",
-                                        style: TextStyle(
-                                            fontSize: 12.dp,
-                                            color: Colors.white),
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.end,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5.dp),
-                                    Image.network(
-                                      model.liveresult[index].awayTeamLogo ??
-                                          "lib/assets/png/sport.png",
-                                      width: 30.dp,
-                                      height: 30.dp,
-                                      loadingBuilder: (BuildContext context,
-                                          Widget child,
-                                          ImageChunkEvent? loadingProgress) {
-                                        if (loadingProgress == null)
-                                          return child;
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    (loadingProgress
-                                                            .expectedTotalBytes ??
-                                                        1)
-                                                : null,
-                                          ),
-                                        );
-                                      },
-                                      errorBuilder: (BuildContext context,
-                                          Object exception,
-                                          StackTrace? stackTrace) {
-                                        return Column(
-                                          children: [
-                                            Icon(
-                                              Icons.error,
-                                              color: Colors.red,
-                                              size: 50.dp,
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-                        ]));
-              },
-              separatorBuilder: (context, index) => const Divider(
-                color: Colors.transparent,
-              ),
-            ), */
-          ),
-        ),
+          );
+        }),
       ),
       model: model,
       context: context,

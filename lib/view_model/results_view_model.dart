@@ -1,5 +1,6 @@
 import 'package:deporte_app_flutter/view_model/root_view_model.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 import '../domain/local_service.dart';
 import '../model/configs/live_result.dart';
@@ -21,10 +22,12 @@ class ResultsModel extends RootViewModel {
   }
 
   final RxList<Resultlive> _liveresult = <Resultlive>[].obs;
+  final RxString _errorMessage = ''.obs;
   RxList<Map<String, dynamic>> categorizedResults =
       <Map<String, dynamic>>[].obs;
   // Getters
   List<Resultlive> get liveresult => _liveresult;
+  RxString get errorMessage => _errorMessage;
 
   @override
   initialize() async {
@@ -32,19 +35,27 @@ class ResultsModel extends RootViewModel {
   }
 
   getresult() async {
-    var results = await resultliveServices.fetchresultlive();
-    Map<String, List<Resultlive>> groupedResults = {};
-    for (var result in results) {
-      if (!groupedResults.containsKey(result.leagueName!)) {
-        groupedResults[result.leagueName!] = [];
+    try {
+      var results = await resultliveServices.fetchresultlive();
+      Map<String, List<Resultlive>> groupedResults = {};
+      for (var result in results) {
+        if (!groupedResults.containsKey(result.leagueName!)) {
+          groupedResults[result.leagueName!] = [];
+        }
+        groupedResults[result.leagueName!]!.add(result);
       }
-      groupedResults[result.leagueName!]!.add(result);
+      categorizedResults.value = groupedResults.entries.map((entry) {
+        return {
+          'leagueName': entry.key,
+          'results': entry.value,
+        };
+      }).toList();
+    } catch (e) {
+      _errorMessage.value = 'Error al obtener los resultados: $e';
     }
-    categorizedResults.value = groupedResults.entries.map((entry) {
-      return {
-        'leagueName': entry.key,
-        'results': entry.value,
-      };
-    }).toList();
+  }
+
+  void inforesult(Resultlive resultlive) {
+    _navigatorService.toInfoResult(resultlive);
   }
 }

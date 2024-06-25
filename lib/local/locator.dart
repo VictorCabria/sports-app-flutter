@@ -1,5 +1,6 @@
 import 'package:deporte_app_flutter/local/data_local.dart';
 import 'package:deporte_app_flutter/local/local.dart';
+import 'package:deporte_app_flutter/view_model/info_result_view_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -92,4 +93,11 @@ void _view() async {
   getIt.registerFactory<ImageShowViewModel>(
     () => ImageShowViewModel(),
   );
+
+    getIt.registerFactory<NewInforesultModel>(
+    () => NewInforesultModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
 }
+
+
