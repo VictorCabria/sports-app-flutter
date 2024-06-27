@@ -19,11 +19,13 @@ class NewInforesultModel extends RootViewModel
   ) : super(_appConfigurationService) {
     initialize();
   }
-  Fixtures? resultlive;
+  Fixtures? fixtures;
   final RxString _homeresult = ''.obs;
   final RxString _awayresult = ''.obs;
   final RxList<GoalScorer> _homeGoals = <GoalScorer>[].obs;
   final RxList<GoalScorer> _awayGoals = <GoalScorer>[].obs;
+  String homeFormation = "4-3-3"; 
+  String awayFormation = "4-1-4-1";
 
   //getters
   RxString get homeresult => _homeresult;
@@ -33,15 +35,15 @@ class NewInforesultModel extends RootViewModel
 
   @override
   initialize() async {
-    resultlive = Get.arguments;
-    print(resultlive);
-    formatData(resultlive!.eventFinalResult!);
+    fixtures = Get.arguments;
+    print(fixtures);
+    formatData(fixtures!.eventFinalResult!);
     separateGoals();
   }
 
   void separateGoals() {
-    if (resultlive?.goalscorers != null) {
-      for (var goal in resultlive!.goalscorers!) {
+    if (fixtures?.goalscorers != null) {
+      for (var goal in fixtures!.goalscorers!) {
         if (goal.homeScorer != "") {
           _homeGoals.add(goal);
         }
@@ -50,6 +52,23 @@ class NewInforesultModel extends RootViewModel
         }
       }
     }
+  }
+
+  List<List<String>> getFormation(String formationString) {
+    List<String> parts = formationString.split('-');
+    List<int> formation = parts.map((part) => int.parse(part)).toList();
+
+    List<List<String>> players = [];
+
+    for (int i = 0; i < formation.length; i++) {
+      List<String> line = [];
+      for (int j = 0; j < formation[i]; j++) {
+        line.add('Player'); // Aquí podrías poner nombres reales de jugadores
+      }
+      players.add(line);
+    }
+
+    return players;
   }
 
   formatData(String data) {

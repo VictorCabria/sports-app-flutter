@@ -25,22 +25,27 @@ class TabStatisticsWidget extends LocalRootWidget<TabStatisticsViewModel> {
       body: Scaffold(
         backgroundColor: const Color(0xFF121212),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Vista 1: Estadísticas del Partido
-              _buildStatisticsView(model),
-              const Divider(
-                color: Colors.white,
-              ),
-              _buildFlagsView(model),
-              const Divider(
-                color: Colors.white,
-              ),
-
-              _buildPossessionChart(model),
-            ],
+          padding:  EdgeInsets.all(8.0.dp),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildStatisticsView(model),
+                const Divider(
+                  color: Colors.white,
+                ),
+                _buildFlagsView(model),
+                const Divider(
+                  color: Colors.white,
+                ),
+                _buildPossessionChart(model),
+                SizedBox(height: 40.dp),
+                const Divider(
+                  color: Colors.white,
+                ),
+                _buildbuildStatistics(model),
+              ],
+            ),
           ),
         ),
       ),
@@ -190,6 +195,61 @@ class TabStatisticsWidget extends LocalRootWidget<TabStatisticsViewModel> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildbuildStatistics(TabStatisticsViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          buildStatRow('Tiros realizados', model.homecshots.value,
+              model.awayshots.value),
+          buildStatRow('Tiros a Puerta', model.homeshotsongoal.value,
+              model.awayshotsongoal.value),
+          buildStatRow('Faltas', model.homeFouls.value, model.awayFouls.value),
+          buildStatRow('Tarjetas Amarrillas', model.homecards.value,
+              model.awaycards.value),
+          buildStatRow('Tarjetas Rojas', model.homecardsred.value,
+              model.awaycardsred.value),
+          buildStatRow(
+              'Tiros de Esquina', model.homecorners.value, model.awaycorners.value),
+          buildStatRow(
+              'Salvadas', model.homesaves.value, model.awaysaves.value),
+        ],
+      ),
+    );
+  }
+
+  Widget buildStatRow(String title, String teamA, String teamB) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0.dp),
+      child: Row(
+        children: [
+          Text(
+            teamA == "" ? "0" : teamA,
+            style: TextStyle(fontSize: 16.dp, color: Colors.white),
+          ),
+          SizedBox(width: 10.dp),
+          Expanded(
+            child: Row(
+              children: [
+                Spacer(),
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 16.dp, color: Colors.white),
+                ),
+                Spacer(),
+              ],
+            ),
+          ),
+          SizedBox(width: 10.dp),
+          Text(
+            teamB == "" ? "0" : teamB,
+            style: TextStyle(fontSize: 16.dp, color: Colors.red),
+          ),
+        ],
+      ),
     );
   }
 }

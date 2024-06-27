@@ -23,7 +23,7 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                model.resultlive!.leagueName ?? "Pendiente",
+                model.fixtures!.leagueName ?? "Pendiente",
                 style: TextStyle(fontSize: 12.dp, color: Colors.white),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -37,7 +37,7 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Image.network(
-                            model.resultlive!.homeTeamLogo ??
+                            model.fixtures!.homeTeamLogo ??
                                 "lib/assets/png/sport.png",
                             width: 30.dp,
                             height: 30.dp,
@@ -72,7 +72,7 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                         SizedBox(height: 4.dp),
                         // Home team name
                         Text(
-                          model.resultlive!.eventHomeTeam!
+                          model.fixtures!.eventHomeTeam!
                               .substring(0, 3)
                               .toUpperCase(),
                           style:
@@ -112,7 +112,7 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Image.network(
-                            model.resultlive!.awayTeamLogo ??
+                            model.fixtures!.awayTeamLogo ??
                                 "lib/assets/png/sport.png",
                             width: 30.dp,
                             height: 30.dp,
@@ -146,7 +146,7 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                         ),
                         SizedBox(height: 4.dp),
                         Text(
-                          model.resultlive!.eventAwayTeam!
+                          model.fixtures!.eventAwayTeam!
                               .substring(0, 3)
                               .toUpperCase(),
                           style:
@@ -227,12 +227,14 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                                 Container(
                                   alignment: Alignment.center,
                                   child: TabStatisticsWidget(
-                                    fixtures: model.resultlive,
+                                    fixtures: model.fixtures,
                                   ),
                                 ),
                                 Container(
                                   alignment: Alignment.center,
-                                  child: TablineUpsWidget(),
+                                  child: TablineUpsWidget(
+                                    fixtures: model.fixtures,
+                                  ),
                                 ),
                               ],
                             ),
@@ -277,7 +279,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 109.dp,
       titleSpacing: 20.dp,
       title: Text(
-        '${model.resultlive?.eventHomeTeam!.substring(0, 3).toUpperCase()}  vs  ${model.resultlive?.eventAwayTeam!.substring(0, 3).toUpperCase()}',
+        '${model.fixtures?.eventHomeTeam!.substring(0, 3).toUpperCase()}  vs  ${model.fixtures?.eventAwayTeam!.substring(0, 3).toUpperCase()}',
         style: TextStyle(
           color: Colors.white,
           fontSize: 20.0.dp,

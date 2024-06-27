@@ -28,6 +28,7 @@ class Fixtures {
   final String? leagueGroup;
   final List<GoalScorer>? goalscorers;
   final List<Statistic>? statistics;
+/*   final Lineups? lineups; */
   /* final List<Substitute>? substitutes; 
      final List<Card>? cards;  
    final Vars? vars;
@@ -63,11 +64,12 @@ class Fixtures {
     this.leagueGroup,
     this.goalscorers,
     this.statistics,
+/*       this.lineups */
     /*  required this.substitutes, 
        required this.cards,  
      required this.vars,
     required this.lineups,
-    required this.statistics,   */
+      */
   });
 
   factory Fixtures.fromJson(Map<String, dynamic> json) {
@@ -105,10 +107,11 @@ class Fixtures {
       statistics: (json['statistics'] as List)
           .map((i) => Statistic.fromJson(i))
           .toList(),
+      /*   lineups: Lineups.fromJson(json['lineups']), */
       /*   substitutes: (json['substitutes'] as List).map((i) => Substitute.fromJson(i)).toList(), 
        cards: (json['cards'] as List).map((i) => Card.fromJson(i)).toList(), 
        vars: Vars.fromJson(json['vars']),
-      lineups: Lineups.fromJson(json['lineups']),  */
+    */
     );
   }
 
@@ -143,10 +146,11 @@ class Fixtures {
       'league_group': leagueGroup,
       'goalscorers': goalscorers?.map((i) => i.toJson()).toList(),
       'statistics': statistics?.map((i) => i.toJson()).toList(),
+/*       'lineups': lineups?.toJson(), */
       /*  'substitutes': substitutes?.map((i) => i.toJson()).toList(), 
       'cards': cards?.map((i) => i.toJson()).toList(), 
        'vars': vars?.toJson(),
-      'lineups': lineups?.toJson(), */
+      */
     };
   }
 }
@@ -444,57 +448,41 @@ class Lineups {
 }
 
 class Player {
-  final String? playerKey;
-  final String? playerName;
-  final String? playerNumber;
+  final String? player;
+  final int? playerNumber;
+  final int? playerPosition;
   final String? playerCountry;
-  final String? playerType;
-  final String? playerAge;
-  final String? playerMatchPlayed;
-  final String? playerGoals;
-  final String? playerYellowCards;
-  final String? playerRedCards;
+  final int? playerKey;
+  final String? infoTime;
 
   Player({
-    required this.playerKey,
-    required this.playerName,
-    required this.playerNumber,
-    required this.playerCountry,
-    required this.playerType,
-    required this.playerAge,
-    required this.playerMatchPlayed,
-    required this.playerGoals,
-    required this.playerYellowCards,
-    required this.playerRedCards,
+    this.player,
+    this.playerNumber,
+    this.playerPosition,
+    this.playerCountry,
+    this.playerKey,
+    this.infoTime,
   });
 
   factory Player.fromJson(Map<String, dynamic> json) {
     return Player(
-      playerKey: json['player_key'],
-      playerName: json['player_name'],
+      player: json['player'],
       playerNumber: json['player_number'],
+      playerPosition: json['player_position'],
       playerCountry: json['player_country'],
-      playerType: json['player_type'],
-      playerAge: json['player_age'],
-      playerMatchPlayed: json['player_match_played'],
-      playerGoals: json['player_goals'],
-      playerYellowCards: json['player_yellow_cards'],
-      playerRedCards: json['player_red_cards'],
+      playerKey: json['player_key'],
+      infoTime: json['info_time'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'player_key': playerKey,
-      'player_name': playerName,
+      'player': player,
       'player_number': playerNumber,
+      'player_position': playerPosition,
       'player_country': playerCountry,
-      'player_type': playerType,
-      'player_age': playerAge,
-      'player_match_played': playerMatchPlayed,
-      'player_goals': playerGoals,
-      'player_yellow_cards': playerYellowCards,
-      'player_red_cards': playerRedCards,
+      'player_key': playerKey,
+      'info_time': infoTime,
     };
   }
 }
