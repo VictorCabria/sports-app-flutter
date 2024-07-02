@@ -1,5 +1,6 @@
 import 'package:deporte_app_flutter/widget/tablineups_widger.dart';
 import 'package:deporte_app_flutter/widget/tabstatistics_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -84,21 +85,33 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                     Row(
                       children: [
                         Text(
-                          model.homeresult.value,
+                          model.homeresult.value == ""
+                              ? ""
+                              : model.homeresult.value,
                           style: TextStyle(
                               fontSize: 26.dp,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 70.dp),
+                        SizedBox(width: 60.dp),
                         Text(
-                          'F',
+                          model.fixtures!.eventStatus == "Finished"
+                              ? "F"
+                              : model.fixtures!.eventStatus == "After Pen."
+                                  ? "Pens"
+                                  : model.fixtures!.eventStatus == "Half Time"
+                                      ? "E"
+                                  : model.fixtures!.eventStatus != ""
+                                      ? model.fixtures!.eventStatus.toString()
+                                      : "VS",
                           style:
                               TextStyle(fontSize: 16.dp, color: Colors.white),
                         ),
-                        SizedBox(width: 70.dp),
+                        SizedBox(width: 60.dp),
                         Text(
-                          model.awayresult.value,
+                          model.awayresult.value == ""
+                              ? ""
+                              : model.awayresult.value,
                           style: TextStyle(
                               fontSize: 26.dp,
                               color: Colors.white,
@@ -158,6 +171,18 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                 ),
               ),
               const Divider(color: Colors.white, height: 25),
+              Visibility(
+                visible: model.penaltys.value,
+                child: Text(
+                  "Tanda de Penales",
+                  style: TextStyle(fontSize: 12.dp, color: Colors.white),
+                ),
+              ),
+              Visibility(
+                  visible: model.penaltys.value,
+                  child: SizedBox(
+                    height: 5.dp,
+                  )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

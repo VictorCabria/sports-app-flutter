@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:deporte_app_flutter/view_model/root_view_model.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
@@ -23,6 +25,7 @@ class ResultsModel extends RootViewModel {
 
   final RxList<Fixtures> _liveresult = <Fixtures>[].obs;
   final RxString _errorMessage = ''.obs;
+  Timer? _timer;
   RxList<Map<String, dynamic>> categorizedResults =
       <Map<String, dynamic>>[].obs;
 
@@ -32,11 +35,24 @@ class ResultsModel extends RootViewModel {
 
   @override
   initialize() async {
-    await getresult();
+    _startLiveUpdates();
+  }
+
+  @override
+  void onClose() {
+    _timer
+        ?.cancel(); // Cancelar el temporizador cuando el controlador se cierre
+    super.onClose();
+  }
+
+  void _startLiveUpdates() {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
+      getresult();
+    });
+    getresult(); // Obtener resultados de inmediato al iniciar
   }
 
   getresult() async {
-    
     try {
       var results = await fixturesServices.fetchresultlive();
       Map<String, List<Fixtures>> groupedResults = {};

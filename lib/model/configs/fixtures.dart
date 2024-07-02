@@ -149,7 +149,7 @@ class Fixtures {
       'league_group': leagueGroup,
       'goalscorers': goalscorers?.map((i) => i.toJson()).toList(),
       'statistics': statistics?.map((i) => i.toJson()).toList(),
-       'lineups': lineups?.toJson(), 
+      'lineups': lineups?.toJson(),
       /*  'substitutes': substitutes?.map((i) => i.toJson()).toList(), 
       'cards': cards?.map((i) => i.toJson()).toList(), 
        'vars': vars?.toJson(),
@@ -427,23 +427,31 @@ class Var {
 class Lineups {
   final List<Player>? homeTeam;
   final List<Player>? awayTeam;
+  final List<Player>? homesubstitutes;
+  final List<Player>? awaysubstitutes;
 
-  Lineups({
-    required this.homeTeam,
-    required this.awayTeam,
-  });
+  Lineups(
+      {this.homeTeam,
+      this.awayTeam,
+      this.homesubstitutes,
+      this.awaysubstitutes});
 
- factory Lineups.fromJson(Map<String, dynamic> json) {
-  return Lineups(
-    homeTeam: (json['home_team']['starting_lineups'] as List)
-        .map((i) => Player.fromJson(i))
-        .toList(),
-    awayTeam: (json['away_team']['starting_lineups'] as List)
-        .map((i) => Player.fromJson(i))
-        .toList(),
-  );
-}
-
+  factory Lineups.fromJson(Map<String, dynamic> json) {
+    return Lineups(
+      homeTeam: (json['home_team']['starting_lineups'] as List)
+          .map((i) => Player.fromJson(i))
+          .toList(),
+      awayTeam: (json['away_team']['starting_lineups'] as List)
+          .map((i) => Player.fromJson(i))
+          .toList(),
+      homesubstitutes: (json['home_team']['substitutes'] as List)
+          .map((i) => Player.fromJson(i))
+          .toList(),
+      awaysubstitutes: (json['away_team']['substitutes'] as List)
+          .map((i) => Player.fromJson(i))
+          .toList(),
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

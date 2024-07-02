@@ -22,14 +22,16 @@ class NewInforesultModel extends RootViewModel
   Fixtures? fixtures;
   final RxString _homeresult = ''.obs;
   final RxString _awayresult = ''.obs;
+  final RxBool _penaltys = false.obs;
   final RxList<GoalScorer> _homeGoals = <GoalScorer>[].obs;
   final RxList<GoalScorer> _awayGoals = <GoalScorer>[].obs;
-  String homeFormation = "4-3-3"; 
+  String homeFormation = "4-3-3";
   String awayFormation = "4-1-4-1";
 
   //getters
   RxString get homeresult => _homeresult;
   RxString get awayresult => _awayresult;
+  RxBool get penaltys => _penaltys;
   RxList<GoalScorer> get homeGoals => _homeGoals;
   RxList<GoalScorer> get awayGoals => _awayGoals;
 
@@ -50,6 +52,9 @@ class NewInforesultModel extends RootViewModel
         if (goal.awayScorer != "") {
           _awayGoals.add(goal);
         }
+        if (goal.infoTime == "Penalty") {
+          penaltys.value = true;
+        }
       }
     }
   }
@@ -63,7 +68,7 @@ class NewInforesultModel extends RootViewModel
     for (int i = 0; i < formation.length; i++) {
       List<String> line = [];
       for (int j = 0; j < formation[i]; j++) {
-        line.add('Player'); // Aquí podrías poner nombres reales de jugadores
+        line.add('Player');
       }
       players.add(line);
     }

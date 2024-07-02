@@ -41,7 +41,7 @@ class TabLineupsViewModel extends RootViewModel {
   Widget buildFormation(String formation, List<Player> players) {
     List<String> positions = formation.split('-');
     List<Widget> rowsWidgets = [];
-    double containerHeight = 190.0.dp; // Using Sizer for responsive dimensions
+    double containerHeight = 190.0.dp; 
     double containerWidth = 100.0.dp;
 
     double rowSpacing = containerHeight / (positions.length + 1);
