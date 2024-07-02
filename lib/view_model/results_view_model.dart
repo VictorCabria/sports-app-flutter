@@ -25,6 +25,7 @@ class ResultsModel extends RootViewModel {
   final RxString _errorMessage = ''.obs;
   RxList<Map<String, dynamic>> categorizedResults =
       <Map<String, dynamic>>[].obs;
+
   // Getters
   List<Fixtures> get liveresult => _liveresult;
   RxString get errorMessage => _errorMessage;

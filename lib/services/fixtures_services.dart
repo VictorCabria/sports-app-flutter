@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../model/configs/fixtures.dart';
 import '../model/fixtures_page.dart';
 
 class FixturesServices extends ChangeNotifier {
-  final String _apiKey =
-      '4de38ab4de2775733857e7e2cb969ec1c7d108283fca8e1f08186ffd005d63cb'; // Reemplaza con tu clave API real
+   static final FixturesServices _instance = FixturesServices._internal();
+  String? _apiKey;
   final String _baseUrl = 'apiv2.allsportsapi.com';
 
   Future<String> _getJsonData(String met) async {
@@ -32,6 +33,27 @@ class FixturesServices extends ChangeNotifier {
       return "";
     }
   }
+    factory FixturesServices() {
+    return _instance;
+  }
+
+  FixturesServices._internal() {
+    _loadApiKey();
+  }
+    Future<void> _loadApiKey() async {
+    final prefs = await SharedPreferences.getInstance();
+    _apiKey = prefs.getString('apiKey');
+    notifyListeners();
+  }
+
+  // Método para actualizar el API key y guardarlo en SharedPreferences
+  Future<void> updateApiKey(String apiKey) async {
+    _apiKey = apiKey;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('apiKey', apiKey);
+    notifyListeners();
+  }
+
 
 // lista resulados en vivo
   Future<List<Fixtures>> fetchresultlive() async {

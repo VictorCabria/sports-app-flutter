@@ -28,6 +28,7 @@ class Fixtures {
   final String? leagueGroup;
   final List<GoalScorer>? goalscorers;
   final List<Statistic>? statistics;
+  final Lineups? lineups;
 /*   final Lineups? lineups; */
   /* final List<Substitute>? substitutes; 
      final List<Card>? cards;  
@@ -64,11 +65,12 @@ class Fixtures {
     this.leagueGroup,
     this.goalscorers,
     this.statistics,
-/*       this.lineups */
+    this.lineups,
+
     /*  required this.substitutes, 
        required this.cards,  
      required this.vars,
-    required this.lineups,
+
       */
   });
 
@@ -107,6 +109,7 @@ class Fixtures {
       statistics: (json['statistics'] as List)
           .map((i) => Statistic.fromJson(i))
           .toList(),
+      lineups: Lineups.fromJson(json['lineups']),
       /*   lineups: Lineups.fromJson(json['lineups']), */
       /*   substitutes: (json['substitutes'] as List).map((i) => Substitute.fromJson(i)).toList(), 
        cards: (json['cards'] as List).map((i) => Card.fromJson(i)).toList(), 
@@ -146,7 +149,7 @@ class Fixtures {
       'league_group': leagueGroup,
       'goalscorers': goalscorers?.map((i) => i.toJson()).toList(),
       'statistics': statistics?.map((i) => i.toJson()).toList(),
-/*       'lineups': lineups?.toJson(), */
+       'lineups': lineups?.toJson(), 
       /*  'substitutes': substitutes?.map((i) => i.toJson()).toList(), 
       'cards': cards?.map((i) => i.toJson()).toList(), 
        'vars': vars?.toJson(),
@@ -430,14 +433,17 @@ class Lineups {
     required this.awayTeam,
   });
 
-  factory Lineups.fromJson(Map<String, dynamic> json) {
-    return Lineups(
-      homeTeam:
-          (json['home_team'] as List).map((i) => Player.fromJson(i)).toList(),
-      awayTeam:
-          (json['away_team'] as List).map((i) => Player.fromJson(i)).toList(),
-    );
-  }
+ factory Lineups.fromJson(Map<String, dynamic> json) {
+  return Lineups(
+    homeTeam: (json['home_team']['starting_lineups'] as List)
+        .map((i) => Player.fromJson(i))
+        .toList(),
+    awayTeam: (json['away_team']['starting_lineups'] as List)
+        .map((i) => Player.fromJson(i))
+        .toList(),
+  );
+}
+
 
   Map<String, dynamic> toJson() {
     return {

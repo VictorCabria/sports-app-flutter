@@ -18,22 +18,85 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
   @override
   Widget widget(TabLineupsViewModel model, BuildContext context) {
     return withLoading(
-      body: Scaffold(
-        backgroundColor: const Color(0xFF121212),
-        body: Padding(
+      body: DefaultTabController(
+        length: 2,
+        child: Padding(
           padding: EdgeInsets.all(8.0.dp),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildStatisticsView(model),
-                const Divider(
-                  color: Colors.white,
-                ),
-                _buildCampo(model)
-              ],
+          child: Column(children: [
+            _buildStatisticsView(model),
+            const Divider(
+              color: Colors.white,
             ),
-          ),
+            Container(
+              height: 45.dp,
+              decoration: BoxDecoration(
+                color: const Color(0xFF040404),
+                borderRadius: BorderRadius.circular(
+                  25.0,
+                ),
+              ),
+              child: TabBar(
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    25.0,
+                  ),
+                  color: const Color(0xFF47484A),
+                ),
+                splashFactory: NoSplash.splashFactory,
+                indicatorSize: TabBarIndicatorSize.tab,
+                unselectedLabelColor:
+                    Theme.of(context).colorScheme.onSurfaceVariant,
+                dividerColor: Colors.transparent,
+                labelColor: Colors.white,
+                indicatorColor: Colors.red,
+                labelStyle: Theme.of(context).textTheme.titleSmall,
+                tabs: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.network(model.fixtures!.homeTeamLogo!,
+                            width: 24.dp, height: 24.dp),
+                        SizedBox(width: 8.dp),
+                        Text(model.fixtures!.eventHomeFormation ?? "N/A",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.dp,
+                            )),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.network(model.fixtures!.awayTeamLogo!,
+                            width: 24.dp, height: 24.dp),
+                        SizedBox(width: 8.dp),
+                        Text(model.fixtures!.eventAwayFormation ?? "N/A",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.dp,
+                            )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  Center(
+                    child: _buildCampoHome(model),
+                  ),
+                  Center(
+                    child: _buildCampoAway(model),
+                  ),
+                ],
+              ),
+            )
+          ]),
         ),
       ),
       model: model,
@@ -56,7 +119,7 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
     );
   }
 
-  Widget _buildCampo(TabLineupsViewModel model) {
+  Widget _buildCampoHome(TabLineupsViewModel model) {
     return Container(
       width: 450.dp,
       height: 350.dp,
@@ -73,8 +136,32 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
               fit: BoxFit.cover,
             ),
           ),
-          model.buildFormation(model.fixtures!
-              .eventHomeFormation!), // Cambia esto con la formación obtenida de `model`
+          model.buildFormation(model.fixtures!.eventHomeFormation!,
+              model.fixtures!.lineups!.homeTeam!),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCampoAway(TabLineupsViewModel model) {
+    return Container(
+      width: 450.dp,
+      height: 350.dp,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateX(-0.9),
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              'lib/assets/jpg/1137.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          model.buildFormation(model.fixtures!.eventAwayFormation!,
+              model.fixtures!.lineups!.awayTeam!),
         ],
       ),
     );
