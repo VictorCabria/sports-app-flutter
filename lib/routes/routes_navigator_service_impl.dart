@@ -10,6 +10,7 @@ import '../domain/local_service.dart';
 import '../model/history_page.dart';
 import '../widget/info_resullt_widget.dart';
 import '../widget/initial_loading.dart';
+import '../widget/leagues_info_widget.dart';
 import '../widget/splash_screen_widget.dart';
 import '../widget/user_profile_widget.dart';
 import 'routes_navigator_service.dart';
@@ -74,6 +75,15 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
         ],
       ),
       GetPage(
+        name: _leaguesinfo,
+        page: () => LeaguesInfoWidget(),
+        middlewares: [
+          DataMiddleware(
+            this,
+          ),
+        ],
+      ),
+      GetPage(
         name: _userprofile,
         page: () => UserProfileWidget(),
         middlewares: [
@@ -126,6 +136,7 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
   static const _login = '/Login';
   static const _userprofile = '/userprofile';
   static const _resultinfo = '/resultinfo';
+  static const _leaguesinfo = '/leaguesinfo';
 
   List<GetPage> routes = [];
 
@@ -172,7 +183,8 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
     _localService.setNavigatorHistory(_navigatorHistory);
     Get.offAllNamed(_splashScreen);
   }
-    @override
+
+  @override
   Future<void> toBack() async {
     Get.back();
   }
@@ -198,6 +210,13 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
     _navigatorHistory.add(HistoryPage(route: _resultinfo));
     _localService.setNavigatorHistory(_navigatorHistory);
     Get.toNamed(_resultinfo, arguments: fixtures);
+  }
+
+   @override
+  Future<void> toInfoleague(Fixtures fixtures) async {
+    _navigatorHistory.add(HistoryPage(route: _leaguesinfo));
+    _localService.setNavigatorHistory(_navigatorHistory);
+    Get.toNamed(_leaguesinfo, arguments: fixtures);
   }
 }
 

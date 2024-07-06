@@ -25,6 +25,8 @@ class NewInforesultModel extends RootViewModel
   final RxBool _penaltys = false.obs;
   final RxList<GoalScorer> _homeGoals = <GoalScorer>[].obs;
   final RxList<GoalScorer> _awayGoals = <GoalScorer>[].obs;
+  final RxList<GoalScorer> _homepenalesGoals = <GoalScorer>[].obs;
+  final RxList<GoalScorer> _awaypenalesGoals = <GoalScorer>[].obs;
   String homeFormation = "4-3-3";
   String awayFormation = "4-1-4-1";
 
@@ -34,6 +36,8 @@ class NewInforesultModel extends RootViewModel
   RxBool get penaltys => _penaltys;
   RxList<GoalScorer> get homeGoals => _homeGoals;
   RxList<GoalScorer> get awayGoals => _awayGoals;
+    RxList<GoalScorer> get homepenalesGoals => _homepenalesGoals;
+  RxList<GoalScorer> get awaypenalesGoals => _awaypenalesGoals;
 
   @override
   initialize() async {
@@ -41,19 +45,36 @@ class NewInforesultModel extends RootViewModel
     print(fixtures);
     formatData(fixtures!.eventFinalResult!);
     separateGoals();
+    separateGoalsPenales();
   }
 
   void separateGoals() {
     if (fixtures?.goalscorers != null) {
       for (var goal in fixtures!.goalscorers!) {
-        if (goal.homeScorer != "") {
-          _homeGoals.add(goal);
+        if (goal.infoTime == "Penalty") {
+        } else {
+          if (goal.homeScorer != "") {
+            homeGoals.add(goal);
+          }
+          if (goal.awayScorer != "") {
+            awayGoals.add(goal);
+          }
         }
-        if (goal.awayScorer != "") {
-          _awayGoals.add(goal);
-        }
+      }
+    }
+  }
+
+  void separateGoalsPenales() {
+    if (fixtures?.goalscorers != null) {
+      for (var goal in fixtures!.goalscorers!) {
         if (goal.infoTime == "Penalty") {
           penaltys.value = true;
+          if (goal.homeScorer != "") {
+            _homepenalesGoals.add(goal);
+          }
+          if (goal.awayScorer != "") {
+            _awaypenalesGoals.add(goal);
+          }
         }
       }
     }

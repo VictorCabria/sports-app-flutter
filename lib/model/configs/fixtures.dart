@@ -429,12 +429,16 @@ class Lineups {
   final List<Player>? awayTeam;
   final List<Player>? homesubstitutes;
   final List<Player>? awaysubstitutes;
+  final List<Coaches>? homecoaches;
+  final List<Coaches>? awaycoaches;
 
   Lineups(
       {this.homeTeam,
       this.awayTeam,
       this.homesubstitutes,
-      this.awaysubstitutes});
+      this.awaysubstitutes,
+      this.homecoaches,
+      this.awaycoaches});
 
   factory Lineups.fromJson(Map<String, dynamic> json) {
     return Lineups(
@@ -449,6 +453,12 @@ class Lineups {
           .toList(),
       awaysubstitutes: (json['away_team']['substitutes'] as List)
           .map((i) => Player.fromJson(i))
+          .toList(),
+      homecoaches: (json['home_team']['coaches'] as List)
+          .map((i) => Coaches.fromJson(i))
+          .toList(),
+      awaycoaches: (json['away_team']['coaches'] as List)
+          .map((i) => Coaches.fromJson(i))
           .toList(),
     );
   }
@@ -497,6 +507,26 @@ class Player {
       'player_country': playerCountry,
       'player_key': playerKey,
       'info_time': infoTime,
+    };
+  }
+}
+
+class Coaches {
+  final String? coache;
+
+  Coaches({
+    this.coache,
+  });
+
+  factory Coaches.fromJson(Map<String, dynamic> json) {
+    return Coaches(
+      coache: json['coache'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'coache': coache,
     };
   }
 }

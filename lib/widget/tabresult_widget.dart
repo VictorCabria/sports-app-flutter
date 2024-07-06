@@ -1,21 +1,28 @@
-
 import 'package:deporte_app_flutter/widget/root_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:get/get.dart';
 
 import '../local/locator.dart';
 import '../model/configs/fixtures.dart';
-import '../view_model/results_view_model.dart';
-class ResultsWidget extends LocalRootWidget<ResultsModel> {
-  ResultsWidget({Key? key}) : super(getIt(), key: key);
+import '../view_model/tabresult_view_model.dart';
+
+class TabResultWidget extends LocalRootWidget<TabResultViewModel> {
+  Fixtures? fixtures;
+
+  TabResultWidget({
+    required this.fixtures,
+    super.key,
+  }) : super(getIt()) {
+    model.setresult(fixtures);
+  }
 
   @override
-  Widget widget(ResultsModel model, BuildContext context) {
+  Widget widget(TabResultViewModel model, BuildContext context) {
     return withLoading(
       body: Scaffold(
         backgroundColor: const Color(0xFF121212),
-        appBar: CustomAppBar(model: model),
         body: Obx(() {
           if (model.categorizedResults.isEmpty) {
             return Center(
@@ -26,12 +33,13 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
             );
           }
           return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            padding: EdgeInsets.symmetric(vertical: 10.dp),
             child: ListView.separated(
               itemCount: model.categorizedResults.length,
               itemBuilder: (context, index) {
                 var category = model.categorizedResults[index];
-                var leagueName = category['leagueName'];
+                var leagueName = category['eventdate'];
+                var formattedDate = model.formatDateString(leagueName);
                 var results = category['results'] as List<Fixtures>;
                 return Container(
                   decoration: BoxDecoration(
@@ -40,31 +48,15 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                   ),
                   padding: EdgeInsets.all(10.dp),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              leagueName ?? "Competencia",
-                              style: TextStyle(
-                                  fontSize: 16.dp, color: Colors.white),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              softWrap: true,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () => model.infoleague(results.first),
-                            child: const Text(
-                              'Ver todo',
-                              style: TextStyle(
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        formattedDate.toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 14.dp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       // Línea divisoria entre categorías
                       ListView.builder(
@@ -256,48 +248,6 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
       ),
       model: model,
       context: context,
-    );
-  }
-}
-
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  final Size preferredSize;
-  final ResultsModel model;
-
-  CustomAppBar({Key? key, required this.model})
-      : preferredSize = Size.fromHeight(70.dp),
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: Colors.black,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(8.dp),
-          bottomRight: Radius.circular(8.dp),
-        ),
-      ),
-      toolbarHeight: 109.dp,
-      titleSpacing: 20.dp,
-      title: Text(
-        'Resultados',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20.0.dp,
-        ),
-      ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.settings),
-          iconSize: 30.dp,
-          onPressed: () {},
-        ),
-        SizedBox(width: 16.dp),
-      ],
     );
   }
 }

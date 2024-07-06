@@ -29,160 +29,172 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 10.dp),
-              Obx(
-                () => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Image.network(
-                            model.fixtures!.homeTeamLogo ??
-                                "lib/assets/png/sport.png",
-                            width: 30.dp,
-                            height: 30.dp,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          (loadingProgress.expectedTotalBytes ??
-                                              1)
-                                      : null,
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  double imageSize = constraints.maxWidth * 0.1;
+                  double largeFontSize = constraints.maxWidth * 0.07;
+                  double spacing = constraints.maxWidth * 0.02;
+
+                  return Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Image.network(
+                                  model.fixtures!.homeTeamLogo ??
+                                      "lib/assets/png/sport.png",
+                                  width: imageSize,
+                                  height: imageSize,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                (loadingProgress
+                                                        .expectedTotalBytes ??
+                                                    1)
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Column(
+                                      children: [
+                                        Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                          size: imageSize,
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                            errorBuilder: (BuildContext context,
-                                Object exception, StackTrace? stackTrace) {
-                              return Column(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 30.sp,
-                                  ),
-                                ],
-                              );
-                            },
+                              ),
+                              SizedBox(height: spacing),
+                              Text(
+                                model.fixtures!.eventHomeTeam!
+                                    .substring(0, 3)
+                                    .toUpperCase(),
+                                style: TextStyle(
+                                    fontSize: 16.dp, color: Colors.white),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: 4.dp),
-                        // Home team name
-                        Text(
-                          model.fixtures!.eventHomeTeam!
-                              .substring(0, 3)
-                              .toUpperCase(),
-                          style:
-                              TextStyle(fontSize: 16.dp, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 30.dp),
-                    Row(
-                      children: [
-                        Text(
-                          model.homeresult.value == ""
-                              ? ""
-                              : model.homeresult.value,
-                          style: TextStyle(
-                              fontSize: 26.dp,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(width: 60.dp),
-                        Text(
-                          model.fixtures!.eventStatus == "Finished"
-                              ? "F"
-                              : model.fixtures!.eventStatus == "After Pen."
-                                  ? "Pens"
-                                  : model.fixtures!.eventStatus == "Half Time"
-                                      ? "E"
-                                  : model.fixtures!.eventStatus != ""
-                                      ? model.fixtures!.eventStatus.toString()
-                                      : "VS",
-                          style:
-                              TextStyle(fontSize: 16.dp, color: Colors.white),
-                        ),
-                        SizedBox(width: 60.dp),
-                        Text(
-                          model.awayresult.value == ""
-                              ? ""
-                              : model.awayresult.value,
-                          style: TextStyle(
-                              fontSize: 26.dp,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 30),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Image.network(
-                            model.fixtures!.awayTeamLogo ??
-                                "lib/assets/png/sport.png",
-                            width: 30.dp,
-                            height: 30.dp,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          (loadingProgress.expectedTotalBytes ??
-                                              1)
-                                      : null,
+                          SizedBox(width: spacing * 2.0),
+                          Row(
+                            children: [
+                              Text(
+                                model.homeresult.value == ""
+                                    ? ""
+                                    : model.homeresult.value,
+                                style: TextStyle(
+                                  fontSize: largeFontSize,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              );
-                            },
-                            errorBuilder: (BuildContext context,
-                                Object exception, StackTrace? stackTrace) {
-                              return Column(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 30.sp,
-                                  ),
-                                ],
-                              );
-                            },
+                              ),
+                              SizedBox(width: spacing * 10),
+                              Text(
+                                model.fixtures!.eventStatus == "Finished"
+                                    ? "F"
+                                    : model.fixtures!.eventStatus == "After ET"
+                                        ? "A.ET"
+                                        : model.fixtures!.eventStatus ==
+                                                "After Pen."
+                                            ? "Pens"
+                                            : model.fixtures!.eventStatus ==
+                                                    "Half Time"
+                                                ? "E"
+                                                : model.fixtures!.eventStatus !=
+                                                        ""
+                                                    ? model
+                                                        .fixtures!.eventStatus
+                                                        .toString()
+                                                    : "VS",
+                                style: TextStyle(
+                                    fontSize: 16.dp, color: Colors.white),
+                              ),
+                              SizedBox(width: spacing * 10),
+                              Text(
+                                model.awayresult.value == ""
+                                    ? ""
+                                    : model.awayresult.value,
+                                style: TextStyle(
+                                  fontSize: largeFontSize,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: 4.dp),
-                        Text(
-                          model.fixtures!.eventAwayTeam!
-                              .substring(0, 3)
-                              .toUpperCase(),
-                          style:
-                              TextStyle(fontSize: 16.dp, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                          SizedBox(width: spacing * 1.5),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Image.network(
+                                  model.fixtures!.awayTeamLogo ??
+                                      "lib/assets/png/sport.png",
+                                  width: imageSize,
+                                  height: imageSize,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                (loadingProgress
+                                                        .expectedTotalBytes ??
+                                                    1)
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Column(
+                                      children: [
+                                        Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                          size: imageSize,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: spacing),
+                              Text(
+                                model.fixtures!.eventAwayTeam!
+                                    .substring(0, 3)
+                                    .toUpperCase(),
+                                style: TextStyle(
+                                    fontSize: 16.dp, color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ));
+                },
               ),
               const Divider(color: Colors.white, height: 25),
-              Visibility(
-                visible: model.penaltys.value,
-                child: Text(
-                  "Tanda de Penales",
-                  style: TextStyle(fontSize: 12.dp, color: Colors.white),
-                ),
-              ),
-              Visibility(
-                  visible: model.penaltys.value,
-                  child: SizedBox(
-                    height: 5.dp,
-                  )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -210,11 +222,56 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                       )),
                 ],
               ),
+              Visibility(
+                  visible: model.penaltys.value,
+                  child: const Divider(color: Colors.white, height: 25)),
+              Visibility(
+                visible: model.penaltys.value,
+                child: Text(
+                  "Tanda de Penales",
+                  style: TextStyle(fontSize: 12.dp, color: Colors.white),
+                ),
+              ),
+              Visibility(
+                  visible: model.penaltys.value,
+                  child: SizedBox(
+                    height: 5.dp,
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Goles del equipo local
+                  Obx(() => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: model.homepenalesGoals.map((goal) {
+                          return Text(
+                            '⚽ ${goal.homeScorer} - ${goal.time}\' ',
+                            style:
+                                TextStyle(fontSize: 12.dp, color: Colors.white),
+                          );
+                        }).toList(),
+                      )),
+                  // Goles del equipo visitante
+                  Obx(() => Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: model.awaypenalesGoals.map((goal) {
+                          return Text(
+                            '${goal.time}\' - ${goal.awayScorer} ⚽',
+                            style:
+                                TextStyle(fontSize: 12.dp, color: Colors.white),
+                          );
+                        }).toList(),
+                      )),
+                ],
+              ),
               const Divider(color: Colors.white, height: 20),
               /*  const Text(
                 'Informacion del Partido',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ), */
+              SizedBox(
+                height: 5.dp,
+              ),
               Container(
                 // Expandir el espacio vertical restante
                 child: Expanded(

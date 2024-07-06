@@ -41,7 +41,7 @@ class TabLineupsViewModel extends RootViewModel {
   Widget buildFormation(String formation, List<Player> players) {
     List<String> positions = formation.split('-');
     List<Widget> rowsWidgets = [];
-    double containerHeight = 190.0.dp; 
+    double containerHeight = 190.0.dp;
     double containerWidth = 100.0.dp;
 
     double rowSpacing = containerHeight / (positions.length + 1);
@@ -82,6 +82,9 @@ class TabLineupsViewModel extends RootViewModel {
           // Encontrar el jugador correspondiente
           Player currentPlayer = fieldPlayers[playerIndex - 1];
 
+          // Extraer el apellido
+          String lastName = currentPlayer.player?.split(' ').last ?? '';
+
           rowPlayers.add(
             Column(
               children: [
@@ -100,18 +103,18 @@ class TabLineupsViewModel extends RootViewModel {
                           : '',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14.0.sp,
+                        fontSize: 14.0.dp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 5.0.sp),
+                SizedBox(height: 5.0.dp),
                 Text(
-                  currentPlayer.player ?? "", // Mostrar el nombre del jugador
+                  lastName, // Mostrar solo el apellido del jugador
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 8.0.sp,
+                    fontSize: 8.0.dp,
                   ),
                 ),
               ],
@@ -137,6 +140,9 @@ class TabLineupsViewModel extends RootViewModel {
         orElse: () =>
             Player(player: 'Portero', playerNumber: 1, playerPosition: 1));
 
+    // Extraer el apellido del portero
+    String goalkeeperLastName = goalkeeper.player?.split(' ').last ?? '';
+
     // Agregar el portero en la parte inferior
     rowsWidgets.add(
       Container(
@@ -146,15 +152,13 @@ class TabLineupsViewModel extends RootViewModel {
           children: [
             Expanded(
               child: Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal:
-                        10.0.sp), // Ajusta el margen según sea necesario
+                margin: EdgeInsets.symmetric(horizontal: 10.0.dp),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 20.0.sp, // Reducir el tamaño del círculo azul
-                      height: 20.0.sp, // Reducir el tamaño del círculo azul
+                      width: 20.0.dp,
+                      height: 20.0.dp,
                       decoration: BoxDecoration(
                         color: Colors.blue,
                         shape: BoxShape.circle,
@@ -166,22 +170,16 @@ class TabLineupsViewModel extends RootViewModel {
                               : '',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 10.0
-                                .sp, // Reducir el tamaño de la fuente del número
+                            fontSize: 10.0.dp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                        height: 2.0.sp), // Espacio entre el número y el nombre
+                    SizedBox(height: 2.0.dp),
                     Text(
-                      goalkeeper.player ?? "", // Mostrar el nombre del portero
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize:
-                            8.0.sp, // Reducir el tamaño de la fuente del nombre
-                      ),
+                      goalkeeperLastName,
+                      style: TextStyle(color: Colors.white, fontSize: 10.0.dp),
                     ),
                   ],
                 ),

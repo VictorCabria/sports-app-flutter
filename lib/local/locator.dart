@@ -13,6 +13,7 @@ import '../repository/local_service_impl.dart';
 import '../routes/routes_navigator_service.dart';
 import '../routes/routes_navigator_service_impl.dart';
 import '../view_model/home_view_model.dart';
+import '../view_model/league_info_view_model.dart';
 import '../view_model/leagues_view_model.dart';
 import '../view_model/image_show_view_model.dart';
 import '../view_model/initial_loading_view_model.dart';
@@ -21,6 +22,8 @@ import '../view_model/results_view_model.dart';
 import '../view_model/scorers_view_model.dart';
 import '../view_model/splah_screen_view_model.dart';
 import '../view_model/tablineups_view_model.dart';
+import '../view_model/tabpositions_view_model.dart';
+import '../view_model/tabresult_view_model.dart';
 import '../view_model/tabstatistics_view_model.dart';
 import '../view_model/user_profile_view_model.dart';
 
@@ -72,6 +75,11 @@ void _view() async {
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
 
+   getIt.registerFactory<NewLeaguesInfoWidgetViewModel>(
+    () => NewLeaguesInfoWidgetViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
   getIt.registerFactory<NewHomeViewModel>(
     () => NewHomeViewModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
@@ -107,6 +115,15 @@ void _view() async {
   );
   getIt.registerFactory<TabLineupsViewModel>(
     () => TabLineupsViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+
+  getIt.registerFactory<TabResultViewModel>(
+    () => TabResultViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+  getIt.registerFactory<TabPositionsViewModel>(
+    () => TabPositionsViewModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
 }

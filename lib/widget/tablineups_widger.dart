@@ -95,18 +95,34 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    _buildScrollableTab(
-                      model,
-                      _buildCampoHome(model),
-                      model.fixtures!.lineups!.homeTeam!,
-                      model.fixtures!.lineups!.homesubstitutes!,
-                    ),
-                    _buildScrollableTab(
-                      model,
-                      _buildCampoAway(model),
-                      model.fixtures!.lineups!.awayTeam!,
-                      model.fixtures!.lineups!.awaysubstitutes!,
-                    ),
+                    model.fixtures!.lineups!.homeTeam!.isNotEmpty
+                        ? _buildScrollableTab(
+                            model,
+                            _buildCampoHome(model),
+                            model.fixtures!.lineups!.homeTeam!,
+                            model.fixtures!.lineups!.homesubstitutes!,
+                            model.fixtures!.lineups!.homecoaches!)
+                        : Center(
+                            child: Text(
+                              'Todavia no han subido las alineaciones',
+                              style: TextStyle(
+                                  fontSize: 16.dp, color: Colors.white),
+                            ),
+                          ),
+                    model.fixtures!.lineups!.awayTeam!.isNotEmpty
+                        ? _buildScrollableTab(
+                            model,
+                            _buildCampoAway(model),
+                            model.fixtures!.lineups!.awayTeam!,
+                            model.fixtures!.lineups!.awaysubstitutes!,
+                            model.fixtures!.lineups!.awaycoaches!)
+                        : Center(
+                            child: Text(
+                              'Todavia no han subido las alineaciones',
+                              style: TextStyle(
+                                  fontSize: 16.dp, color: Colors.white),
+                            ),
+                          ),
                   ],
                 ),
               ),
@@ -120,7 +136,7 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
   }
 
   Widget _buildScrollableTab(TabLineupsViewModel model, Widget campo,
-      List<Player> starters, List<Player> substitutes) {
+      List<Player> starters, List<Player> substitutes, List<Coaches> coaches) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -132,15 +148,29 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
               Expanded(
                 child: Column(
                   children: [
+                    const Divider(
+                      color: Colors.white,
+                    ),
                     _buildSectionTitle('Titulares'),
+                    const Divider(
+                      color: Colors.white,
+                    ),
                     _buildPlayerList(starters),
+                    _buildcoachList(coaches)
+                    
                   ],
                 ),
               ),
               Expanded(
                 child: Column(
                   children: [
+                    const Divider(
+                      color: Colors.white,
+                    ),
                     _buildSectionTitle('Suplentes'),
+                    const Divider(
+                      color: Colors.white,
+                    ),
                     _buildPlayerList(substitutes),
                   ],
                 ),
@@ -245,12 +275,41 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
             player.player ?? '',
             style: TextStyle(color: Colors.white, fontSize: 14.dp),
           ),
-          subtitle: Text(
-            player.playerPosition.toString(),
-            style: TextStyle(color: Colors.white70, fontSize: 12.dp),
-          ),
         );
       },
+    );
+  }
+
+  Widget _buildcoachList(List<Coaches> players) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 10.dp),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Director Técnico',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.dp,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: players.length,
+          itemBuilder: (context, index) {
+            Coaches coach = players[index];
+            return ListTile(
+              leading: Text(
+                coach.coache.toString(),
+                style: TextStyle(color: Colors.white, fontSize: 14.dp),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

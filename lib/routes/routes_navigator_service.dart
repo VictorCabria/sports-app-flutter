@@ -11,6 +11,7 @@ abstract class RoutesNavigatorService {
   Future<void> remplaceAllToHome();
   Future<void> remplaceAllTologin();
   Future<void> toInfoResult(Fixtures fixtures);
+  Future<void> toInfoleague(Fixtures fixtures);
   Future<void> toBack();
 
   String get initialRoute;
