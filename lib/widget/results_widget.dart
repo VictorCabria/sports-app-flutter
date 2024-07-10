@@ -1,12 +1,14 @@
-
 import 'package:deporte_app_flutter/widget/root_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:get/get.dart';
 
 import '../local/locator.dart';
 import '../model/configs/fixtures.dart';
 import '../view_model/results_view_model.dart';
+
 class ResultsWidget extends LocalRootWidget<ResultsModel> {
   ResultsWidget({Key? key}) : super(getIt(), key: key);
 
@@ -73,6 +75,7 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                         itemCount: results.length,
                         itemBuilder: (context, idx) {
                           Fixtures result = results[idx];
+                          String penaltyWinner = model.getPenaltyWinner(result);
                           return InkWell(
                             onTap: () => model.inforesult(result),
                             child: Column(
@@ -168,9 +171,19 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                                     ),
                                     SizedBox(width: 15.dp),
                                     Text(
-                                      result.eventFtResult != ""
+                                      result.eventStatus == "After Pen."
                                           ? result.eventFtResult.toString()
-                                          : result.eventFinalResult.toString(),
+                                          : result.eventStatus == "After ET"
+                                              ? result.eventFinalResult
+                                                  .toString()
+                                              : result.eventFtResult != ""
+                                                  ? result.eventFtResult
+                                                      .toString()
+                                                  : result.eventFinalResult
+                                                      .toString(),
+                                      /* result.eventFtResult != ""
+                                          ? result.eventFtResult.toString()
+                                          : result.eventFinalResult.toString(), */
                                       style: TextStyle(
                                           fontSize: 12.dp, color: Colors.white),
                                       textAlign: TextAlign.center,
@@ -237,6 +250,20 @@ class ResultsWidget extends LocalRootWidget<ResultsModel> {
                                       ),
                                     ),
                                   ],
+                                ),
+                                Visibility(
+                                  visible: result.eventStatus == "After Pen.",
+                                  child: SizedBox(
+                                    height: 10.dp,
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: result.eventStatus == "After Pen.",
+                                  child: Text(
+                                    "$penaltyWinner avanza ${result.eventPenaltyResult} en tiros penal",
+                                    style: TextStyle(
+                                        fontSize: 12.dp, color: Colors.grey),
+                                  ),
                                 )
                               ],
                             ),

@@ -36,14 +36,14 @@ class NewInforesultModel extends RootViewModel
   RxBool get penaltys => _penaltys;
   RxList<GoalScorer> get homeGoals => _homeGoals;
   RxList<GoalScorer> get awayGoals => _awayGoals;
-    RxList<GoalScorer> get homepenalesGoals => _homepenalesGoals;
+  RxList<GoalScorer> get homepenalesGoals => _homepenalesGoals;
   RxList<GoalScorer> get awaypenalesGoals => _awaypenalesGoals;
 
   @override
   initialize() async {
     fixtures = Get.arguments;
     print(fixtures);
-    formatData(fixtures!.eventFinalResult!);
+    formatData(fixtures);
     separateGoals();
     separateGoalsPenales();
   }
@@ -97,11 +97,23 @@ class NewInforesultModel extends RootViewModel
     return players;
   }
 
-  formatData(String data) {
-    List<String> parts = data.split('-');
+  formatData(Fixtures? fixtures) {
+    var data = "";
+    if (fixtures!.eventStatus != "") {
+      if (fixtures.eventStatus == "After Pen.") {
+        data = fixtures.eventFtResult.toString();
+      } else if (fixtures.eventStatus == "After ET") {
+        data = fixtures.eventFinalResult.toString();
+      } else if (fixtures.eventFtResult != "") {
+        data = fixtures.eventFtResult.toString();
+      } else {
+        data = fixtures.eventFinalResult.toString();
+      }
+      List<String> parts = data.split('-');
 
-    _homeresult.value = parts[0];
-    _awayresult.value = parts[1];
+      _homeresult.value = parts[0];
+      _awayresult.value = parts[1];
+    }
   }
 
   getback() {

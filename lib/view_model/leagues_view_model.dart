@@ -1,8 +1,11 @@
+import 'dart:async';
 
 import 'package:deporte_app_flutter/model/configs/league.dart';
 import 'package:get/get.dart';
 import '../model/configs/country.dart';
+import '../model/configs/livescore.dart';
 import '../services/ligas_services.dart';
+import '../services/livescore_services.dart';
 import '../services/paises_services.dart';
 import 'root_view_model.dart';
 import '../domain/local_service.dart';
@@ -22,21 +25,81 @@ class NewLeaguesWidgetViewModel extends RootViewModel
   ) : super(_appConfigurationService) {
     initialize();
   }
-
+  final RxString _homeresult = ''.obs;
+  final RxString _errorMessage = ''.obs;
+  final RxString _awayresult = ''.obs;
+  Timer? _timer;
   final RxList<Country> _countries = <Country>[].obs;
-  final RxList<League> _leagues = <League>[].obs;
+  final RxList<LivesScore> _leagues = <LivesScore>[].obs;
+  RxList<Map<String, dynamic>> categorizedResults =
+      <Map<String, dynamic>>[].obs;
 
   // Getters
   List<Country> get countries => _countries;
-  List<League> get leagues => _leagues;
+  List<LivesScore> get leagues => _leagues;
+  RxString get homeresult => _homeresult;
+  RxString get awayresult => _awayresult;
 
   @override
-  initialize() async {
-    await getleague();
+  void initialize() {
+    _startLiveUpdates();
   }
 
-  getleague() async {
-    var result = await leagueServices.fetchLeague();
-    _leagues.addAll(result);
+  void _startLiveUpdates() {
+    _timer = Timer.periodic(Duration(minutes: 2), (timer) {
+      getresult();
+    });
+    getresult(); // Fetch initial data
+  }
+
+/*   Future<void> getLeague() async {
+    var result = await liverScoreServices.fetchLeague();
+    updateLeagueList(result);
+  }
+ */
+  getresult() async {
+    try {
+      var results = await liverScoreServices.fetchLeague();
+      Map<String, List<LivesScore>> groupedResults = {};
+      for (var result in results) {
+        if (!groupedResults.containsKey(result.eventKey.toString())) {
+          groupedResults[result.eventKey.toString()] = [];
+        }
+        groupedResults[result.eventKey.toString()]!.add(result);
+      }
+      categorizedResults.value = groupedResults.entries.map((entry) {
+        return {
+          'eventkey': entry.key,
+          'results': entry.value,
+        };
+      }).toList();
+    } catch (e) {
+      _errorMessage.value = 'Error al obtener los resultados: $e';
+    }
+  }
+
+  void formatLeagueResults(LivesScore league) {
+    var data = "";
+    if (league.eventStatus != "") {
+      if (league.eventStatus == "After Pen.") {
+        data = league.eventFtResult.toString();
+      } else if (league.eventStatus == "After ET") {
+        data = league.eventFinalResult.toString();
+      } else if (league.eventFtResult != "") {
+        data = league.eventFtResult.toString();
+      } else {
+        data = league.eventFinalResult.toString();
+      }
+      List<String> parts = data.split('-');
+
+      _homeresult.value = parts[0];
+      _awayresult.value = parts[1];
+    }
+  }
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
   }
 }

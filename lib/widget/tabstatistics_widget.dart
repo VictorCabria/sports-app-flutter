@@ -24,27 +24,38 @@ class TabStatisticsWidget extends LocalRootWidget<TabStatisticsViewModel> {
     return withLoading(
       body: Scaffold(
         backgroundColor: const Color(0xFF121212),
-        body: Padding(
-          padding:  EdgeInsets.all(8.0.dp),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildStatisticsView(model),
-                const Divider(
-                  color: Colors.white,
-                ),
-                _buildFlagsView(model),
-                const Divider(
-                  color: Colors.white,
-                ),
-                _buildPossessionChart(model),
-                SizedBox(height: 40.dp),
-                const Divider(
-                  color: Colors.white,
-                ),
-                _buildbuildStatistics(model),
-              ],
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(8.0.dp),
+            child: SingleChildScrollView(
+              child: model.fixtures!.statistics!.isEmpty
+                  ? Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20.dp),
+                    child: Text(
+                      'No hay estadísticas aún',
+                      style: TextStyle(color: Colors.white, fontSize: 16.dp),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _buildStatisticsView(model),
+                        const Divider(
+                          color: Colors.white,
+                        ),
+                        _buildFlagsView(model),
+                        const Divider(
+                          color: Colors.white,
+                        ),
+                        _buildPossessionChart(model),
+                        SizedBox(height: 40.dp),
+                        const Divider(
+                          color: Colors.white,
+                        ),
+                        _buildbuildStatistics(model),
+                      ],
+                    ),
             ),
           ),
         ),
@@ -212,8 +223,8 @@ class TabStatisticsWidget extends LocalRootWidget<TabStatisticsViewModel> {
               model.awaycards.value),
           buildStatRow('Tarjetas Rojas', model.homecardsred.value,
               model.awaycardsred.value),
-          buildStatRow(
-              'Tiros de Esquina', model.homecorners.value, model.awaycorners.value),
+          buildStatRow('Tiros de Esquina', model.homecorners.value,
+              model.awaycorners.value),
           buildStatRow(
               'Salvadas', model.homesaves.value, model.awaysaves.value),
         ],

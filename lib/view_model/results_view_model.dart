@@ -80,4 +80,21 @@ class ResultsModel extends RootViewModel {
   void infoleague(Fixtures resultlive) {
     _navigatorService.toInfoleague(resultlive);
   }
+
+  String getPenaltyWinner(Fixtures result) {
+    if (result.eventStatus == "After Pen." && result.eventPenaltyResult != null) {
+      List<String> scores = result.eventPenaltyResult!.split(" - ");
+      if (scores.length == 2) {
+        int homeScore = int.parse(scores[0]);
+        int awayScore = int.parse(scores[1]);
+        if (homeScore > awayScore) {
+          return result.eventHomeTeam ?? "";
+        } else if (awayScore > homeScore) {
+          return result.eventAwayTeam ?? "";
+        }
+      }
+    }
+    return "";
+  }
+
 }

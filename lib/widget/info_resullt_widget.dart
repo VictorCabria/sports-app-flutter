@@ -107,7 +107,9 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                               Text(
                                 model.fixtures!.eventStatus == "Finished"
                                     ? "F"
-                                    : model.fixtures!.eventStatus == "After ET"
+                                    : model.fixtures!.eventStatus == "Break Time"
+                                        ? "B.T"
+                                        : model.fixtures!.eventStatus == "After ET"
                                         ? "A.ET"
                                         : model.fixtures!.eventStatus ==
                                                 "After Pen."

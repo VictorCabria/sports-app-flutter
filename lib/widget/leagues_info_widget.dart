@@ -20,7 +20,7 @@ class LeaguesInfoWidget extends LocalRootWidget<NewLeaguesInfoWidgetViewModel> {
             model: model,
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            padding:  EdgeInsets.symmetric(horizontal: 8.dp, vertical: 5.dp),
             child: Column(
               children: [
                 SizedBox(height: 15.dp), // Espacio entre el AppBar y el TabBar
