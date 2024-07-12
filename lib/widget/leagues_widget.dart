@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:get/get.dart';
 import '../local/locator.dart';
+import '../model/configs/comment.dart';
 import '../model/configs/livescore.dart';
 import '../view_model/leagues_view_model.dart';
 import 'root_widget.dart';
@@ -49,6 +50,9 @@ class LeaguesWidget extends LocalRootWidget<NewLeaguesWidgetViewModel> {
                             itemCount: results.length,
                             itemBuilder: (context, idx) {
                               LivesScore result = results[idx];
+                              model.formatLeagueResults(result);
+                              model
+                                  .getresultcomment(result.eventKey.toString());
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -342,6 +346,15 @@ class LeaguesWidget extends LocalRootWidget<NewLeaguesWidgetViewModel> {
                                           ],
                                         ),
                                         const Divider(),
+                                        Obx(() {
+                                          var comment = model.latestComments[
+                                              result.eventKey.toString()];
+                                          return comment != null
+                                              ? AnimatedComment(
+                                                  comment: comment)
+                                              : Container();
+                                        }),
+                                        SizedBox(height: 5.dp),
                                       ],
                                     ),
                                   ),
@@ -364,6 +377,28 @@ class LeaguesWidget extends LocalRootWidget<NewLeaguesWidgetViewModel> {
       ),
       model: model,
       context: context,
+    );
+  }
+}
+
+class AnimatedComment extends StatelessWidget {
+  final Comment comment;
+
+  AnimatedComment({required this.comment});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+      padding: EdgeInsets.symmetric(vertical: 5.dp),
+      child: Text(
+        ' ${comment.commentsText} ${comment.commentsTime} (${comment.matchId})',
+        style: TextStyle(
+          fontSize: 12.dp,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
@@ -412,132 +447,3 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
-     /* Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.network(
-                              model.leagues[index].leaguelogo ??
-                                  "lib/assets/png/sport.png",
-                              width: 40.dp,
-                              height: 40.dp,
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            (loadingProgress
-                                                    .expectedTotalBytes ??
-                                                1)
-                                        : null,
-                                  ),
-                                );
-                              },
-                              errorBuilder: (BuildContext context,
-                                  Object exception, StackTrace? stackTrace) {
-                                return Column(
-                                  children: [
-                                    Icon(
-                                      Icons.error,
-                                      color: Colors.red,
-                                      size: 50.dp,
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                            SizedBox(width: 10.dp),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    model.leagues[index].leagueName.toString(),
-                                    style: TextStyle(
-                                        fontSize: 16.dp, color: Colors.white),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    model.leagues[index].countryName.toString(),
-                                    style: TextStyle(
-                                        fontSize: 14.dp, color: Colors.white),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Ver todo',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10.dp),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0.dp),
-                          child: SizedBox(
-                            height: 200.dp,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                  flex: 7,
-                                  child: Image.asset(
-                                    'lib/assets/png/TECNICOBARCA.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    color: Colors.grey[500],
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.0.dp,
-                                          vertical: 8.0.dp),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Título del artículo',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0.dp,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(height: 4.0.dp),
-                                          Text(
-                                            'Publicado por Victor Cabria',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10.0.dp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ), */

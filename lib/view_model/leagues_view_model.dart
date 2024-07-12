@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:deporte_app_flutter/model/configs/league.dart';
+import 'package:deporte_app_flutter/services/commet_services.dart';
 import 'package:get/get.dart';
+import '../model/configs/comment.dart';
 import '../model/configs/country.dart';
 import '../model/configs/livescore.dart';
 import '../services/ligas_services.dart';
@@ -28,6 +30,7 @@ class NewLeaguesWidgetViewModel extends RootViewModel
   final RxString _homeresult = ''.obs;
   final RxString _errorMessage = ''.obs;
   final RxString _awayresult = ''.obs;
+   var latestComments = <String, Comment>{}.obs; 
   Timer? _timer;
   final RxList<Country> _countries = <Country>[].obs;
   final RxList<LivesScore> _leagues = <LivesScore>[].obs;
@@ -46,7 +49,7 @@ class NewLeaguesWidgetViewModel extends RootViewModel
   }
 
   void _startLiveUpdates() {
-    _timer = Timer.periodic(Duration(minutes: 2), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
       getresult();
     });
     getresult(); // Fetch initial data
@@ -57,7 +60,7 @@ class NewLeaguesWidgetViewModel extends RootViewModel
     updateLeagueList(result);
   }
  */
-  getresult() async {
+  void getresult() async {
     try {
       var results = await liverScoreServices.fetchLeague();
       Map<String, List<LivesScore>> groupedResults = {};
@@ -77,6 +80,19 @@ class NewLeaguesWidgetViewModel extends RootViewModel
       _errorMessage.value = 'Error al obtener los resultados: $e';
     }
   }
+
+
+  Future<void> getresultcomment(String idman) async {
+    try {
+      var results = await commentsServices.fetchcomment(idman);
+      if (results != null && results.isNotEmpty) {
+        latestComments[idman] = results.last; // Almacenar solo el último comentario
+      }
+    } catch (e) {
+      _errorMessage.value = 'Error al obtener los resultados: $e';
+    }
+  }
+
 
   void formatLeagueResults(LivesScore league) {
     var data = "";
