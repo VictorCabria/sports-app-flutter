@@ -40,13 +40,11 @@ class TabPositionsViewModel extends RootViewModel {
     try {
       var response = await standingServices
           .fetchstandingsleague(value!.leagueKey.toString());
-      // Aquí puedes trabajar con response.total, que es la lista de standings
       for (var standing in response.total!) {
         _standing.add(standing);
       }
     } catch (e) {
       print('Error al obtener los datos de la API: $e');
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
     }
   }
 

@@ -30,7 +30,7 @@ class NewLeaguesWidgetViewModel extends RootViewModel
   final RxString _homeresult = ''.obs;
   final RxString _errorMessage = ''.obs;
   final RxString _awayresult = ''.obs;
-   var latestComments = <String, Comment>{}.obs; 
+  var latestComments = <String, Comment>{}.obs;
   Timer? _timer;
   final RxList<Country> _countries = <Country>[].obs;
   final RxList<LivesScore> _leagues = <LivesScore>[].obs;
@@ -81,18 +81,21 @@ class NewLeaguesWidgetViewModel extends RootViewModel
     }
   }
 
-
   Future<void> getresultcomment(String idman) async {
     try {
       var results = await commentsServices.fetchcomment(idman);
       if (results != null && results.isNotEmpty) {
-        latestComments[idman] = results.last; // Almacenar solo el último comentario
+        latestComments[idman] =
+            results.last; // Almacenar solo el último comentario
       }
     } catch (e) {
       _errorMessage.value = 'Error al obtener los resultados: $e';
     }
   }
 
+  void inforesult(LivesScore resultlive) {
+    _navigatorService.toInfoResultlive(resultlive);
+  }
 
   void formatLeagueResults(LivesScore league) {
     var data = "";

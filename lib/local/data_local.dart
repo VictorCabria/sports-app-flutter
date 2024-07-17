@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
 
+import '../model/configs/fixtures.dart';
 import '../model/history_page.dart';
 import 'local.dart';
 
@@ -26,6 +27,23 @@ class DataLocal extends Local {
   Future<void> setNavigatorHistory(List<HistoryPage> navigatorHistory) async {
     _storage.remove('navigatorHistory');
     _storage.write('navigatorHistory', navigatorHistory);
+  }
+
+  @override
+  Future<Fixtures?> getUserToEdit() async {
+    final data = await _storage.read('Fixtures');
+    if (data != null && data is Map<String, dynamic>) {
+      return Fixtures.fromJson(data);
+    } else if (data != null && data is Fixtures) {
+      return data;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> setUserToEdit(Fixtures fixtures) async {
+    _storage.remove('Fixtures');
+    _storage.write('Fixtures', fixtures);
   }
 
   @override

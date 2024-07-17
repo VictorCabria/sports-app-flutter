@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../domain/local_service.dart';
+import '../model/configs/livescore.dart';
 import '../model/history_page.dart';
 import '../widget/info_resullt_widget.dart';
 import '../widget/initial_loading.dart';
@@ -26,7 +27,7 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
     _navigatorHistory = await _localService.getNavigatorHistory() ?? [];
 
     _initialRoute = _navigatorHistory.isNotEmpty
-        ? _navigatorHistory.last.route
+        ? _navigatorHistory.first.route
         : _splashScreen;
 
     /* switch (_initialRoute) {
@@ -44,7 +45,7 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
         break;
     } */
     _initialArguments =
-        _navigatorHistory.isNotEmpty ? _navigatorHistory.last.arguments : null;
+        _navigatorHistory.isNotEmpty ? _navigatorHistory.first.arguments : null;
 
     routes = [
       GetPage(
@@ -212,13 +213,31 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
     Get.toNamed(_resultinfo, arguments: fixtures);
   }
 
-   @override
+  @override
+  Future<void> toInfoResultlive(LivesScore livescore) async {
+    _navigatorHistory.add(HistoryPage(route: _resultinfo));
+    _localService.setNavigatorHistory(_navigatorHistory);
+    Get.toNamed(_resultinfo, arguments: livescore);
+  }
+
+  @override
   Future<void> toInfoleague(Fixtures fixtures) async {
     _navigatorHistory.add(HistoryPage(route: _leaguesinfo));
     _localService.setNavigatorHistory(_navigatorHistory);
     Get.toNamed(_leaguesinfo, arguments: fixtures);
   }
 }
+
+final RxList<String> allowedRoutes = [
+  RoutesNavigatorServiceImpl._splashScreen,
+  RoutesNavigatorServiceImpl._leaguesinfo,
+  RoutesNavigatorServiceImpl._resultinfo,
+  RoutesNavigatorServiceImpl._home,
+  RoutesNavigatorServiceImpl._userprofile,
+  RoutesNavigatorServiceImpl._leaguesinfo,
+  RoutesNavigatorServiceImpl._leagues
+  // Agrega otras rutas permitidas aquí
+].obs;
 
 // middlewares
 

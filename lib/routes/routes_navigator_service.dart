@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 import '../model/configs/fixtures.dart';
+import '../model/configs/livescore.dart';
 
 abstract class RoutesNavigatorService {
   Future<void> toInitial();
@@ -11,6 +12,7 @@ abstract class RoutesNavigatorService {
   Future<void> remplaceAllToHome();
   Future<void> remplaceAllTologin();
   Future<void> toInfoResult(Fixtures fixtures);
+  Future<void> toInfoResultlive(LivesScore livescore);
   Future<void> toInfoleague(Fixtures fixtures);
   Future<void> toBack();
 

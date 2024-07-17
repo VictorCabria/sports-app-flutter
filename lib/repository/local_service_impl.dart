@@ -1,5 +1,6 @@
 import '../local/local.dart';
 import '../domain/local_service.dart';
+import '../model/configs/fixtures.dart';
 import '../model/history_page.dart';
 
 class LocalServiceImpl extends LocalService {
@@ -9,9 +10,13 @@ class LocalServiceImpl extends LocalService {
 
   // gets
   @override
-  @override
   Future<List<HistoryPage>?> getNavigatorHistory() {
     return _local.getNavigatorHistory();
+  }
+
+  @override
+  Future<Fixtures?> getUserToEdit() {
+    return _local.getUserToEdit();
   }
 
   @override
@@ -19,9 +24,14 @@ class LocalServiceImpl extends LocalService {
     return _local.setNavigatorHistory(navigatorHistory);
   }
 
+  @override
+  Future<void> setUserToEdit(Fixtures fixtures) {
+    return _local.setUserToEdit(fixtures);
+  }
+
   // sets
 
- @override
+  @override
   Future<void> clear() async {
     return _local.deleteAll();
   }

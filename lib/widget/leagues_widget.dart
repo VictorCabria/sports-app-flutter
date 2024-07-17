@@ -53,312 +53,322 @@ class LeaguesWidget extends LocalRootWidget<NewLeaguesWidgetViewModel> {
                               model.formatLeagueResults(result);
                               model
                                   .getresultcomment(result.eventKey.toString());
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [Colors.white, Colors.blue],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.topRight,
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.dp),
-                                        topRight: Radius.circular(10.dp),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 30.dp),
-                                              child: Text(
-                                                result.eventHomeTeam.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 16.dp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 30.dp),
-                                              child: Text(
-                                                result.eventAwayTeam.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 16.dp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                              return InkWell(
+                                /*   onTap: () => model.inforesult(result), */
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                          colors: [Colors.white, Colors.blue],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.topRight,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 10.dp),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5.dp),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(width: 10.dp),
-                                        Text(
-                                          result.leagueName.toString(),
-                                          style: TextStyle(
-                                            fontSize: 12.dp,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.dp),
+                                          topRight: Radius.circular(10.dp),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 30.dp),
+                                                child: Text(
+                                                  result.eventHomeTeam
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 14.dp,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    right: 30.dp),
+                                                child: Text(
+                                                  result.eventAwayTeam
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 14.dp,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        SizedBox(width: 10.dp),
-                                        const Divider(),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: Image.network(
-                                                    result.homeTeamLogo ??
-                                                        "lib/assets/png/sport.png",
-                                                    width:
-                                                        constraints.maxWidth *
-                                                            0.08,
-                                                    height:
-                                                        constraints.maxWidth *
-                                                            0.08,
-                                                    loadingBuilder: (BuildContext
-                                                            context,
-                                                        Widget child,
-                                                        ImageChunkEvent?
-                                                            loadingProgress) {
-                                                      if (loadingProgress ==
-                                                          null) return child;
-                                                      return Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          value: loadingProgress
-                                                                      .expectedTotalBytes !=
-                                                                  null
-                                                              ? loadingProgress
-                                                                      .cumulativeBytesLoaded /
-                                                                  (loadingProgress
-                                                                          .expectedTotalBytes ??
-                                                                      1)
-                                                              : null,
-                                                        ),
-                                                      );
-                                                    },
-                                                    errorBuilder:
-                                                        (BuildContext context,
-                                                            Object exception,
-                                                            StackTrace?
-                                                                stackTrace) {
-                                                      return Column(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.error,
-                                                            color: Colors.red,
-                                                            size: constraints
-                                                                    .maxWidth *
-                                                                0.1,
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                    height:
-                                                        constraints.maxWidth *
-                                                            0.02),
-                                                Text(
-                                                  result.eventHomeTeam!
-                                                      .substring(0, 3)
-                                                      .toUpperCase(),
-                                                  style: TextStyle(
-                                                    fontSize: 16.dp,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                                width: constraints.maxWidth *
-                                                    0.02),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  model.homeresult.toString(),
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        constraints.maxWidth *
-                                                            0.07,
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                    width:
-                                                        constraints.maxWidth *
-                                                            0.15),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "En vivo",
-                                                      style: TextStyle(
-                                                        fontSize: 14.dp,
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      result.eventStatus ==
-                                                              "Finished"
-                                                          ? "F"
-                                                          : result.eventStatus ==
-                                                                  "Break Time"
-                                                              ? "B.T"
-                                                              : result.eventStatus ==
-                                                                      "After ET"
-                                                                  ? "A.ET"
-                                                                  : result.eventStatus ==
-                                                                          "After Pen."
-                                                                      ? "Pens"
-                                                                      : result.eventStatus ==
-                                                                              "Half Time"
-                                                                          ? "E"
-                                                                          : result.eventStatus != ""
-                                                                              ? result.eventStatus.toString()
-                                                                              : "VS",
-                                                      style: TextStyle(
-                                                        fontSize: 14.dp,
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                    width:
-                                                        constraints.maxWidth *
-                                                            0.15),
-                                                Text(
-                                                  model.homeresult.toString(),
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        constraints.maxWidth *
-                                                            0.07,
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                                width: constraints.maxWidth *
-                                                    0.015),
-                                            Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: Image.network(
-                                                    result.awayTeamLogo ??
-                                                        "lib/assets/png/sport.png",
-                                                    width:
-                                                        constraints.maxWidth *
-                                                            0.08,
-                                                    height:
-                                                        constraints.maxWidth *
-                                                            0.08,
-                                                    loadingBuilder: (BuildContext
-                                                            context,
-                                                        Widget child,
-                                                        ImageChunkEvent?
-                                                            loadingProgress) {
-                                                      if (loadingProgress ==
-                                                          null) return child;
-                                                      return Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          value: loadingProgress
-                                                                      .expectedTotalBytes !=
-                                                                  null
-                                                              ? loadingProgress
-                                                                      .cumulativeBytesLoaded /
-                                                                  (loadingProgress
-                                                                          .expectedTotalBytes ??
-                                                                      1)
-                                                              : null,
-                                                        ),
-                                                      );
-                                                    },
-                                                    errorBuilder:
-                                                        (BuildContext context,
-                                                            Object exception,
-                                                            StackTrace?
-                                                                stackTrace) {
-                                                      return Column(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.error,
-                                                            color: Colors.red,
-                                                            size: constraints
-                                                                    .maxWidth *
-                                                                0.08,
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                    height:
-                                                        constraints.maxWidth *
-                                                            0.02),
-                                                Text(
-                                                  result.eventAwayTeam!
-                                                      .substring(0, 3)
-                                                      .toUpperCase(),
-                                                  style: TextStyle(
-                                                    fontSize: 16.dp,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const Divider(),
-                                        Obx(() {
-                                          var comment = model.latestComments[
-                                              result.eventKey.toString()];
-                                          return comment != null
-                                              ? AnimatedComment(
-                                                  comment: comment)
-                                              : Container();
-                                        }),
-                                        SizedBox(height: 5.dp),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(height: 10.dp),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 5.dp),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(width: 10.dp),
+                                          Text(
+                                            result.leagueName.toString(),
+                                            style: TextStyle(
+                                              fontSize: 12.dp,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          SizedBox(width: 10.dp),
+                                          const Divider(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            4.0),
+                                                    child: Image.network(
+                                                      result.homeTeamLogo ??
+                                                          "lib/assets/png/sport.png",
+                                                      width:
+                                                          constraints.maxWidth *
+                                                              0.08,
+                                                      height:
+                                                          constraints.maxWidth *
+                                                              0.08,
+                                                      loadingBuilder: (BuildContext
+                                                              context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                              loadingProgress) {
+                                                        if (loadingProgress ==
+                                                            null) return child;
+                                                        return Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            value: loadingProgress
+                                                                        .expectedTotalBytes !=
+                                                                    null
+                                                                ? loadingProgress
+                                                                        .cumulativeBytesLoaded /
+                                                                    (loadingProgress
+                                                                            .expectedTotalBytes ??
+                                                                        1)
+                                                                : null,
+                                                          ),
+                                                        );
+                                                      },
+                                                      errorBuilder:
+                                                          (BuildContext context,
+                                                              Object exception,
+                                                              StackTrace?
+                                                                  stackTrace) {
+                                                        return Column(
+                                                          children: [
+                                                            Icon(
+                                                              Icons.error,
+                                                              color: Colors.red,
+                                                              size: constraints
+                                                                      .maxWidth *
+                                                                  0.01.dp,
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      height:
+                                                          constraints.maxWidth *
+                                                              0.02),
+                                                  Text(
+                                                    result.eventHomeTeam!
+                                                        .substring(0, 3)
+                                                        .toUpperCase(),
+                                                    style: TextStyle(
+                                                      fontSize: 16.dp,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                  width: constraints.maxWidth *
+                                                      0.02),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    model.homeresult.toString(),
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          constraints.maxWidth *
+                                                              0.07,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      width:
+                                                          constraints.maxWidth *
+                                                              0.15),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        "En vivo",
+                                                        style: TextStyle(
+                                                          fontSize: 14.dp,
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        result.eventStatus ==
+                                                                "Finished"
+                                                            ? "F"
+                                                            : result.eventStatus ==
+                                                                    "Break Time"
+                                                                ? "B.T"
+                                                                : result.eventStatus ==
+                                                                        "After ET"
+                                                                    ? "A.ET"
+                                                                    : result.eventStatus ==
+                                                                            "After Pen."
+                                                                        ? "Pens"
+                                                                        : result.eventStatus ==
+                                                                                "Half Time"
+                                                                            ? "E"
+                                                                            : result.eventStatus != ""
+                                                                                ? result.eventStatus.toString()
+                                                                                : "VS",
+                                                        style: TextStyle(
+                                                          fontSize: 14.dp,
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                      width:
+                                                          constraints.maxWidth *
+                                                              0.15),
+                                                  Text(
+                                                    model.homeresult.toString(),
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          constraints.maxWidth *
+                                                              0.07,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                  width: constraints.maxWidth *
+                                                      0.015),
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            4.0),
+                                                    child: Image.network(
+                                                      result.awayTeamLogo ??
+                                                          "lib/assets/png/sport.png",
+                                                      width:
+                                                          constraints.maxWidth *
+                                                              0.08,
+                                                      height:
+                                                          constraints.maxWidth *
+                                                              0.08,
+                                                      loadingBuilder: (BuildContext
+                                                              context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                              loadingProgress) {
+                                                        if (loadingProgress ==
+                                                            null) return child;
+                                                        return Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            value: loadingProgress
+                                                                        .expectedTotalBytes !=
+                                                                    null
+                                                                ? loadingProgress
+                                                                        .cumulativeBytesLoaded /
+                                                                    (loadingProgress
+                                                                            .expectedTotalBytes ??
+                                                                        1)
+                                                                : null,
+                                                          ),
+                                                        );
+                                                      },
+                                                      errorBuilder:
+                                                          (BuildContext context,
+                                                              Object exception,
+                                                              StackTrace?
+                                                                  stackTrace) {
+                                                        return Column(
+                                                          children: [
+                                                            Icon(
+                                                              Icons.error,
+                                                              color: Colors.red,
+                                                              size: constraints
+                                                                      .maxWidth *
+                                                                  0.05.dp,
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      height:
+                                                          constraints.maxWidth *
+                                                              0.02),
+                                                  Text(
+                                                    result.eventAwayTeam!
+                                                        .substring(0, 3)
+                                                        .toUpperCase(),
+                                                    style: TextStyle(
+                                                      fontSize: 16.dp,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          const Divider(),
+                                          Obx(() {
+                                            var comment = model.latestComments[
+                                                result.eventKey.toString()];
+                                            return comment != null
+                                                ? AnimatedComment(
+                                                    comment: comment)
+                                                : Container();
+                                          }),
+                                          SizedBox(height: 5.dp),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           ),

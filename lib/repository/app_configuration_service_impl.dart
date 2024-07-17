@@ -18,7 +18,7 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     "isVideo": false,
     "isImage": true,
     "isLocal": true,
-    "path": "lib/assets/png/sport.png"
+    "path": "lib/assets/png/splash_2gether.png"
   },
   "login": {
     "available": true,

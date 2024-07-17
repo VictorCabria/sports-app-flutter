@@ -15,9 +15,7 @@ class SplashScreenViewModel
     with GetSingleTickerProviderStateMixin  */
 {
   final RoutesNavigatorService _navigatorService;
-
   final LocalService _localService;
-
   final AppConfigurationService _appConfigurationService;
 
   SplashScreenViewModel(

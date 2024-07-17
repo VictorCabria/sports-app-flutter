@@ -119,4 +119,8 @@ class NewInforesultModel extends RootViewModel
   getback() {
     _navigatorService.toBack();
   }
+
+  void closeApp() {
+    _navigatorService.closeApp();
+  }
 }

@@ -40,8 +40,7 @@ class ResultsModel extends RootViewModel {
 
   @override
   void onClose() {
-    _timer
-        ?.cancel(); // Cancelar el temporizador cuando el controlador se cierre
+    _timer?.cancel();
     super.onClose();
   }
 
@@ -74,6 +73,7 @@ class ResultsModel extends RootViewModel {
   }
 
   void inforesult(Fixtures resultlive) {
+    _localService.setUserToEdit(resultlive);
     _navigatorService.toInfoResult(resultlive);
   }
 
@@ -82,7 +82,8 @@ class ResultsModel extends RootViewModel {
   }
 
   String getPenaltyWinner(Fixtures result) {
-    if (result.eventStatus == "After Pen." && result.eventPenaltyResult != null) {
+    if (result.eventStatus == "After Pen." &&
+        result.eventPenaltyResult != null) {
       List<String> scores = result.eventPenaltyResult!.split(" - ");
       if (scores.length == 2) {
         int homeScore = int.parse(scores[0]);
@@ -96,5 +97,4 @@ class ResultsModel extends RootViewModel {
     }
     return "";
   }
-
 }

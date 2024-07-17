@@ -207,7 +207,7 @@ class TabPositionsWidget extends LocalRootWidget<TabPositionsViewModel> {
                                         Icon(
                                           Icons.error,
                                           color: Colors.red,
-                                          size: 50.dp,
+                                          size: 20.dp,
                                         ),
                                       ],
                                     );
