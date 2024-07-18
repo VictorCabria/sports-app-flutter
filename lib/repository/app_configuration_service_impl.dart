@@ -4,7 +4,6 @@ import 'package:deporte_app_flutter/repository/app_configuration_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-
 class AppConfigurationServiceImpl extends AppConfigurationService {
   final Map<String, Map<String, dynamic>?> _configuration = {};
 
@@ -18,7 +17,7 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     "isVideo": false,
     "isImage": true,
     "isLocal": true,
-    "path": "lib/assets/png/splash_2gether.png"
+    "path": "lib/assets/png/LogoSport.png"
   },
   "login": {
     "available": true,

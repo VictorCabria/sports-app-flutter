@@ -18,10 +18,14 @@ class LoginWidget extends LocalRootWidget<LoginWidgetModel> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                SizedBox(height: 200.dp),
-                Image.asset("lib/assets/png/2logo_2gether.png"),
+                SizedBox(height: 100.dp),
+                Image.asset(
+                  "lib/assets/png/LogoSport.png",
+                  height: 150.dp,
+                  width: 150.dp,
+                ),
                 SizedBox(
-                  height: 50.dp,
+                  height: 40.dp,
                 ),
                 TextFormField(
                   controller: model.codeController,
