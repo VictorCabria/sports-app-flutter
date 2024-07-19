@@ -59,14 +59,14 @@ class TabStatisticsViewModel extends RootViewModel {
 
   void setresult(Fixtures? value) {
     fixtures = value;
-    ballPossession();
+    ballPossession(value);
   }
 
-  void ballPossession() {
+  void ballPossession(Fixtures? fixturesx) {
     RxString homeposession = "0".obs;
     RxString awayposession = "0".obs;
-    if (fixtures?.statistics != null) {
-      for (var fix in fixtures!.statistics!) {
+    if (fixturesx?.statistics != null) {
+      for (var fix in fixturesx!.statistics!) {
         if (fix.type == "Ball Possession") {
           homeposession.value = fix.home!;
           awayposession.value = fix.away!;

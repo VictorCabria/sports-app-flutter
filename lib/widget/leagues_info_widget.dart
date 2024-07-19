@@ -1,6 +1,7 @@
 import 'package:deporte_app_flutter/widget/root_widget.dart';
 import 'package:deporte_app_flutter/widget/tabpositions_widget.dart';
 import 'package:deporte_app_flutter/widget/tabresult_widget.dart';
+import 'package:deporte_app_flutter/widget/tabscorers_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
@@ -20,13 +21,13 @@ class LeaguesInfoWidget extends LocalRootWidget<NewLeaguesInfoWidgetViewModel> {
             model: model,
           ),
           body: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 8.dp, vertical: 5.dp),
+            padding: EdgeInsets.symmetric(horizontal: 8.dp, vertical: 5.dp),
             child: Column(
               children: [
                 SizedBox(height: 15.dp), // Espacio entre el AppBar y el TabBar
                 Expanded(
                   child: DefaultTabController(
-                    length: 2,
+                    length: 3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,6 +45,7 @@ class LeaguesInfoWidget extends LocalRootWidget<NewLeaguesInfoWidgetViewModel> {
                             tabs: const [
                               Tab(text: "Resultados"),
                               Tab(text: "Posiciones"),
+                              Tab(text: "Goleadores"),
                             ],
                           ),
                         ),
@@ -62,6 +64,12 @@ class LeaguesInfoWidget extends LocalRootWidget<NewLeaguesInfoWidgetViewModel> {
                                 Container(
                                   alignment: Alignment.center,
                                   child: TabPositionsWidget(
+                                    fixtures: model.fixtures,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: TabScorersWidget(
                                     fixtures: model.fixtures,
                                   ),
                                 ),

@@ -1,3 +1,4 @@
+import 'package:deporte_app_flutter/widget/tabheadtohead_widget.dart';
 import 'package:deporte_app_flutter/widget/tablineups_widger.dart';
 import 'package:deporte_app_flutter/widget/tabstatistics_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -107,22 +108,25 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                               Text(
                                 model.fixtures!.eventStatus == "Finished"
                                     ? "F"
-                                    : model.fixtures!.eventStatus == "Break Time"
+                                    : model.fixtures!.eventStatus ==
+                                            "Break Time"
                                         ? "B.T"
-                                        : model.fixtures!.eventStatus == "After ET"
-                                        ? "A.ET"
                                         : model.fixtures!.eventStatus ==
-                                                "After Pen."
-                                            ? "Pens"
+                                                "After ET"
+                                            ? "A.ET"
                                             : model.fixtures!.eventStatus ==
-                                                    "Half Time"
-                                                ? "E"
-                                                : model.fixtures!.eventStatus !=
-                                                        ""
-                                                    ? model
-                                                        .fixtures!.eventStatus
-                                                        .toString()
-                                                    : "VS",
+                                                    "After Pen."
+                                                ? "Pens"
+                                                : model.fixtures!.eventStatus ==
+                                                        "Half Time"
+                                                    ? "E"
+                                                    : model.fixtures!
+                                                                .eventStatus !=
+                                                            ""
+                                                        ? model.fixtures!
+                                                            .eventStatus
+                                                            .toString()
+                                                        : "VS",
                                 style: TextStyle(
                                     fontSize: 16.dp, color: Colors.white),
                               ),
@@ -278,7 +282,7 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                 // Expandir el espacio vertical restante
                 child: Expanded(
                   child: DefaultTabController(
-                    length: 2,
+                    length: 3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -300,6 +304,9 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                               Tab(
                                 text: "Alineaciones",
                               ),
+                              Tab(
+                                text: "Cara a cara",
+                              ),
                             ],
                           ),
                         ),
@@ -317,6 +324,12 @@ class InfoResultWidget extends LocalRootWidget<NewInforesultModel> {
                                 Container(
                                   alignment: Alignment.center,
                                   child: TablineUpsWidget(
+                                    fixtures: model.fixtures,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: TabHeadToHeadWidget(
                                     fixtures: model.fixtures,
                                   ),
                                 ),

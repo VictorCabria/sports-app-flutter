@@ -21,9 +21,11 @@ import '../view_model/login_view_model.dart';
 import '../view_model/results_view_model.dart';
 import '../view_model/scorers_view_model.dart';
 import '../view_model/splah_screen_view_model.dart';
+import '../view_model/tabheadtohead_view_model.dart';
 import '../view_model/tablineups_view_model.dart';
 import '../view_model/tabpositions_view_model.dart';
 import '../view_model/tabresult_view_model.dart';
+import '../view_model/tabscorers_view_model.dart';
 import '../view_model/tabstatistics_view_model.dart';
 import '../view_model/user_profile_view_model.dart';
 
@@ -111,6 +113,14 @@ void _view() async {
 
     getIt.registerFactory<TabStatisticsViewModel>(
     () => TabStatisticsViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+  getIt.registerFactory<TabScorersViewModel>(
+    () => TabScorersViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
+  getIt.registerFactory<TabHeadToHeadViewModel>(
+    () => TabHeadToHeadViewModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
   getIt.registerFactory<TabLineupsViewModel>(

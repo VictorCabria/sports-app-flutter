@@ -177,7 +177,7 @@ class LeaguesWidget extends LocalRootWidget<NewLeaguesWidgetViewModel> {
                                                               color: Colors.red,
                                                               size: constraints
                                                                       .maxWidth *
-                                                                  0.01.dp,
+                                                                  0.08.dp,
                                                             ),
                                                           ],
                                                         );
@@ -266,7 +266,7 @@ class LeaguesWidget extends LocalRootWidget<NewLeaguesWidgetViewModel> {
                                                           constraints.maxWidth *
                                                               0.15),
                                                   Text(
-                                                    model.homeresult.toString(),
+                                                    model.awayresult.toString(),
                                                     style: TextStyle(
                                                       fontSize:
                                                           constraints.maxWidth *
@@ -330,7 +330,7 @@ class LeaguesWidget extends LocalRootWidget<NewLeaguesWidgetViewModel> {
                                                               color: Colors.red,
                                                               size: constraints
                                                                       .maxWidth *
-                                                                  0.05.dp,
+                                                                  0.08.dp,
                                                             ),
                                                           ],
                                                         );

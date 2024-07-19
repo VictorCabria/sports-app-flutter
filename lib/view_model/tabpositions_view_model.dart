@@ -48,7 +48,7 @@ class TabPositionsViewModel extends RootViewModel {
     }
   }
 
-  getresult21(Fixtures? value) async {
+  void getresult21(Fixtures? value) async {
     try {
       var response = await standingServices
           .fetchstandingsleague(value!.leagueKey.toString());
