@@ -26,12 +26,16 @@ class ResultsModel extends RootViewModel {
   final RxList<Fixtures> _liveresult = <Fixtures>[].obs;
   final RxString _errorMessage = ''.obs;
   Timer? _timer;
+  final RxBool _isBuscar = false.obs;
   RxList<Map<String, dynamic>> categorizedResults =
+      <Map<String, dynamic>>[].obs;
+  RxList<Map<String, dynamic>> categorizedResultsfilter =
       <Map<String, dynamic>>[].obs;
 
   // Getters
   List<Fixtures> get liveresult => _liveresult;
   RxString get errorMessage => _errorMessage;
+  RxBool get isBuscar => _isBuscar;
 
   @override
   initialize() async {
@@ -61,12 +65,19 @@ class ResultsModel extends RootViewModel {
         }
         groupedResults[result.leagueName!]!.add(result);
       }
+
       categorizedResults.value = groupedResults.entries.map((entry) {
         return {
           'leagueName': entry.key,
           'results': entry.value,
         };
       }).toList();
+
+      // Copy the categorizedResults to categorizedResultsfilter for filtering
+      categorizedResultsfilter.value =
+          List<Map<String, dynamic>>.from(categorizedResults);
+      // Reapply the filter after updating the results
+      filterList(currentQuery);
     } catch (e) {
       _errorMessage.value = 'Error al obtener los resultados: $e';
     }
@@ -75,10 +86,36 @@ class ResultsModel extends RootViewModel {
   void inforesult(Fixtures resultlive) {
     _localService.setUserToEdit(resultlive);
     _navigatorService.toInfoResult(resultlive);
+    if (isBuscar.value) {
+      buscar();
+    }
   }
 
   void infoleague(Fixtures resultlive) {
     _navigatorService.toInfoleague(resultlive);
+  }
+
+  void buscar() {
+    isBuscar.value = !isBuscar.value;
+    if (!isBuscar.value) {
+      filterList(''); // Reset to original list when search is closed
+    }
+  }
+
+  String currentQuery = ''; // Store the current query
+
+  void filterList(String query) {
+    currentQuery = query; // Update the current query
+    if (query.isNotEmpty) {
+      String lowercaseQuery = query.toLowerCase();
+      categorizedResults.value = categorizedResultsfilter.where((element) {
+        return (element['leagueName']?.toLowerCase() ?? '')
+            .contains(lowercaseQuery);
+      }).toList();
+    } else {
+      categorizedResults.value =
+          List<Map<String, dynamic>>.from(categorizedResultsfilter);
+    }
   }
 
   String getPenaltyWinner(Fixtures result) {
