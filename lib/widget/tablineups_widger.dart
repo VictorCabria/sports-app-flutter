@@ -155,9 +155,8 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
                     const Divider(
                       color: Colors.white,
                     ),
-                    _buildPlayerList(starters),
+                    _buildPlayerList(starters, model),
                     _buildcoachList(coaches)
-                    
                   ],
                 ),
               ),
@@ -171,7 +170,7 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
                     const Divider(
                       color: Colors.white,
                     ),
-                    _buildPlayerList(substitutes),
+                    _buildPlayerList(substitutes, model),
                   ],
                 ),
               ),
@@ -259,21 +258,24 @@ class TablineUpsWidget extends LocalRootWidget<TabLineupsViewModel> {
     );
   }
 
-  Widget _buildPlayerList(List<Player> players) {
+  Widget _buildPlayerList(List<Player> players, TabLineupsViewModel model) {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: players.length,
       itemBuilder: (context, index) {
         Player player = players[index];
-        return ListTile(
-          leading: Text(
-            player.playerNumber.toString(),
-            style: TextStyle(color: Colors.white, fontSize: 14.dp),
-          ),
-          title: Text(
-            player.player ?? '',
-            style: TextStyle(color: Colors.white, fontSize: 14.dp),
+        return InkWell(
+          onTap: () => model.infoplayer(player, model.fixtures),
+          child: ListTile(
+            leading: Text(
+              player.playerNumber.toString(),
+              style: TextStyle(color: Colors.white, fontSize: 14.dp),
+            ),
+            title: Text(
+              player.player ?? '',
+              style: TextStyle(color: Colors.white, fontSize: 14.dp),
+            ),
           ),
         );
       },

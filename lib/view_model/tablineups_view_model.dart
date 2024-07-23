@@ -38,6 +38,10 @@ class TabLineupsViewModel extends RootViewModel {
     awayFormation.value = away;
   }
 
+  void infoplayer(Player? player, Fixtures? fixtures) {
+    _navigatorService.toPlayerSoccer(player!, fixtures!);
+  }
+
   Widget buildFormation(String formation, List<Player> players) {
     List<String> positions = formation.split('-');
     List<Widget> rowsWidgets = [];
@@ -88,23 +92,26 @@ class TabLineupsViewModel extends RootViewModel {
           rowPlayers.add(
             Column(
               children: [
-                Container(
-                  width: 40.0.sp,
-                  height: 20.0.sp,
-                  margin: EdgeInsets.symmetric(horizontal: colSpacing / 3),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Text(
-                      currentPlayer.playerNumber != 0
-                          ? currentPlayer.playerNumber.toString()
-                          : '',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.0.dp,
-                        fontWeight: FontWeight.bold,
+                InkWell(
+                  onTap: () => infoplayer(currentPlayer, fixtures),
+                  child: Container(
+                    width: 40.0.sp,
+                    height: 20.0.sp,
+                    margin: EdgeInsets.symmetric(horizontal: colSpacing / 3),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        currentPlayer.playerNumber != 0
+                            ? currentPlayer.playerNumber.toString()
+                            : '',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0.dp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -156,22 +163,25 @@ class TabLineupsViewModel extends RootViewModel {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 20.0.dp,
-                      height: 20.0.dp,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          goalkeeper.playerNumber != 0
-                              ? goalkeeper.playerNumber.toString()
-                              : '',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10.0.dp,
-                            fontWeight: FontWeight.bold,
+                    InkWell(
+                      onTap: () => infoplayer(goalkeeper, fixtures),
+                      child: Container(
+                        width: 20.0.dp,
+                        height: 20.0.dp,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            goalkeeper.playerNumber != 0
+                                ? goalkeeper.playerNumber.toString()
+                                : '',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.0.dp,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

@@ -12,8 +12,11 @@ abstract class RoutesNavigatorService {
   Future<void> remplaceAllToHome();
   Future<void> remplaceAllTologin();
   Future<void> toInfoResult(Fixtures fixtures);
-  Future<void> toInfoResultlive(LivesScore livescore);
+  Future<void> toInfoResultlive(
+    LivesScore livescore,
+  );
   Future<void> toInfoleague(Fixtures fixtures);
+  Future<void> toPlayerSoccer(Player player, Fixtures fixtures);
   Future<void> toBack();
 
   String get initialRoute;

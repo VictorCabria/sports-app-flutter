@@ -5,13 +5,14 @@ import 'package:deporte_app_flutter/widget/login_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
+import '../model/configs/fixtures.dart';
 import '../domain/local_service.dart';
 import '../model/configs/livescore.dart';
 import '../model/history_page.dart';
 import '../widget/info_resullt_widget.dart';
 import '../widget/initial_loading.dart';
 import '../widget/leagues_info_widget.dart';
+import '../widget/player_soccer_widget.dart';
 import '../widget/splash_screen_widget.dart';
 import '../widget/user_profile_widget.dart';
 import 'routes_navigator_service.dart';
@@ -94,6 +95,15 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
         ],
       ),
       GetPage(
+        name: _playersoccer,
+        page: () => PlayerSoccerWidget(),
+        middlewares: [
+          DataMiddleware(
+            this,
+          ),
+        ],
+      ),
+      GetPage(
         name: _home,
         page: () => HomeWidget(),
         middlewares: [
@@ -138,6 +148,7 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
   static const _userprofile = '/userprofile';
   static const _resultinfo = '/resultinfo';
   static const _leaguesinfo = '/leaguesinfo';
+  static const _playersoccer = '/playersoccer';
 
   List<GetPage> routes = [];
 
@@ -221,6 +232,14 @@ class RoutesNavigatorServiceImpl extends RoutesNavigatorService {
   }
 
   @override
+  Future<void> toPlayerSoccer(Player player, Fixtures fixtures) async {
+    _navigatorHistory.add(HistoryPage(route: _playersoccer));
+    _localService.setNavigatorHistory(_navigatorHistory);
+    Get.toNamed(_playersoccer,
+        arguments: {"player": player, "fixtures": fixtures});
+  }
+
+  @override
   Future<void> toInfoleague(Fixtures fixtures) async {
     _navigatorHistory.add(HistoryPage(route: _leaguesinfo));
     _localService.setNavigatorHistory(_navigatorHistory);
@@ -235,7 +254,7 @@ final RxList<String> allowedRoutes = [
   RoutesNavigatorServiceImpl._home,
   RoutesNavigatorServiceImpl._userprofile,
   RoutesNavigatorServiceImpl._leaguesinfo,
-  RoutesNavigatorServiceImpl._leagues
+  RoutesNavigatorServiceImpl._leagues,
   // Agrega otras rutas permitidas aquí
 ].obs;
 

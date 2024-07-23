@@ -10,7 +10,7 @@ import '../local/locator.dart';
 import '../view_model/league_info_view_model.dart';
 
 class LeaguesInfoWidget extends LocalRootWidget<NewLeaguesInfoWidgetViewModel> {
-  LeaguesInfoWidget() : super(getIt());
+  LeaguesInfoWidget({super.key}) : super(getIt());
 
   @override
   Widget widget(NewLeaguesInfoWidgetViewModel model, BuildContext context) {

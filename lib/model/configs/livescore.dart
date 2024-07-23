@@ -433,10 +433,10 @@ class Var {
 }
 
 class Lineups {
-  final List<Player>? homeTeam;
-  final List<Player>? awayTeam;
-  final List<Player>? homesubstitutes;
-  final List<Player>? awaysubstitutes;
+  final List<PlayerLive>? homeTeam;
+  final List<PlayerLive>? awayTeam;
+  final List<PlayerLive>? homesubstitutes;
+  final List<PlayerLive>? awaysubstitutes;
   final List<Coaches>? homecoaches;
   final List<Coaches>? awaycoaches;
 
@@ -451,16 +451,16 @@ class Lineups {
   factory Lineups.fromJson(Map<String, dynamic> json) {
     return Lineups(
       homeTeam: (json['home_team']['starting_lineups'] as List)
-          .map((i) => Player.fromJson(i))
+          .map((i) => PlayerLive.fromJson(i))
           .toList(),
       awayTeam: (json['away_team']['starting_lineups'] as List)
-          .map((i) => Player.fromJson(i))
+          .map((i) => PlayerLive.fromJson(i))
           .toList(),
       homesubstitutes: (json['home_team']['substitutes'] as List)
-          .map((i) => Player.fromJson(i))
+          .map((i) => PlayerLive.fromJson(i))
           .toList(),
       awaysubstitutes: (json['away_team']['substitutes'] as List)
-          .map((i) => Player.fromJson(i))
+          .map((i) => PlayerLive.fromJson(i))
           .toList(),
       homecoaches: (json['home_team']['coaches'] as List)
           .map((i) => Coaches.fromJson(i))
@@ -479,7 +479,7 @@ class Lineups {
   }
 }
 
-class Player {
+class PlayerLive {
   final String? player;
   final int? playerNumber;
   final int? playerPosition;
@@ -487,7 +487,7 @@ class Player {
   final int? playerKey;
   final String? infoTime;
 
-  Player({
+  PlayerLive({
     this.player,
     this.playerNumber,
     this.playerPosition,
@@ -496,8 +496,8 @@ class Player {
     this.infoTime,
   });
 
-  factory Player.fromJson(Map<String, dynamic> json) {
-    return Player(
+  factory PlayerLive.fromJson(Map<String, dynamic> json) {
+    return PlayerLive(
       player: json['player'],
       playerNumber: json['player_number'],
       playerPosition: json['player_position'],
