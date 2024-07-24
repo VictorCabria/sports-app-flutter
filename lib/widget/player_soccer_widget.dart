@@ -30,7 +30,7 @@ class PlayerSoccerWidget extends LocalRootWidget<PlayerSoccerViewModel> {
                     child: Opacity(
                       opacity: 0.2,
                       child: Image.network(
-                        model.fixtures!.homeTeamLogo.toString(),
+                        model.urlteams.toString(),
                         fit: BoxFit.cover,
                       ),
                     ),

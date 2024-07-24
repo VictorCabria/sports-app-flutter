@@ -344,7 +344,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     icon: const Icon(Icons.cancel))
                 : IconButton(
                     onPressed: () => model.buscar(),
-                    icon: const Icon(Icons.search)),
+                    icon:  Icon(Icons.search, size: 30.dp,)),
             SizedBox(width: 16.dp),
           ],
         ));
@@ -363,13 +363,14 @@ class CustomSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.blue.shade200,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextFormField(
         autofocus: true,
         onChanged: (value) => model.filterList(value),
         decoration: const InputDecoration(
+          
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
