@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -50,7 +51,7 @@ class FixturesServices extends ChangeNotifier {
       'APIkey': _apiKey,
       'from': yesterdayFormatted,
       'to': tomorrowFormatted,
-      'leagueId': leagueid, 
+      'leagueId': leagueid,
     });
 
     final response = await http.get(url);
@@ -74,6 +75,10 @@ class FixturesServices extends ChangeNotifier {
     _apiKey = prefs.getString('apiKey');
     notifyListeners();
   }
+
+  var errorMessage = ''.obs;
+  var successMessage = ''.obs;
+
 
   // Método para actualizar el API key y guardarlo en SharedPreferences
   Future<void> updateApiKey(String apiKey) async {

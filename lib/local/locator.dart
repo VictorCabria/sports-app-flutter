@@ -27,6 +27,7 @@ import '../view_model/tablineups_view_model.dart';
 import '../view_model/tabpositions_view_model.dart';
 import '../view_model/tabresult_view_model.dart';
 import '../view_model/tabscorers_view_model.dart';
+import '../view_model/tabstatistics_player_view_model.dart';
 import '../view_model/tabstatistics_view_model.dart';
 import '../view_model/user_profile_view_model.dart';
 
@@ -143,4 +144,9 @@ void _view() async {
     () => TabPositionsViewModel(getIt.get<RoutesNavigatorService>(),
         getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
   );
+  getIt.registerFactory<TabStatisticsPlayerViewModel>(
+    () => TabStatisticsPlayerViewModel(getIt.get<RoutesNavigatorService>(),
+        getIt.get<LocalService>(), getIt.get<AppConfigurationService>()),
+  );
 }
+

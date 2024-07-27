@@ -1,4 +1,5 @@
 import 'package:deporte_app_flutter/widget/root_widget.dart';
+import 'package:deporte_app_flutter/widget/tabstatistics_player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
@@ -18,26 +19,34 @@ class PlayerSoccerWidget extends LocalRootWidget<PlayerSoccerViewModel> {
         appBar: CustomAppBar(
           model: model,
         ),
-        body: Padding(
-          padding: EdgeInsets.all(5.0.dp),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  // Logo del equipo de fondo
-                  Positioned.fill(
-                    child: Opacity(
-                      opacity: 0.2,
-                      child: Image.network(
-                        model.urlteams.toString(),
-                        fit: BoxFit.cover,
+        body: Obx(() {
+          if (model.playerSoccer.isEmpty) {
+            return Center(
+              child: Text(
+                'No hay informacion de este jugador',
+                style: TextStyle(fontSize: 16.dp, color: Colors.white),
+              ),
+            );
+          }
+          return Padding(
+            padding: EdgeInsets.all(5.0.dp),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    // Logo del equipo de fondo
+                    Positioned.fill(
+                      child: Opacity(
+                        opacity: 0.2,
+                        child: Image.network(
+                          model.urlteams.toString(),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  // Contenedor principal con la imagen y la información del jugador
-                  Obx(
-                    () => Container(
+                    // Contenedor principal con la imagen y la información del jugador
+                    Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 2.0.dp),
                       ),
@@ -49,7 +58,8 @@ class PlayerSoccerWidget extends LocalRootWidget<PlayerSoccerViewModel> {
                             child: Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(model.urlplayer.toString()),
+                                  image:
+                                      NetworkImage(model.urlplayer.toString()),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -64,8 +74,8 @@ class PlayerSoccerWidget extends LocalRootWidget<PlayerSoccerViewModel> {
                             child: Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image:
-                                      AssetImage("lib/assets/png/jugadoranonimo.png"),
+                                  image: AssetImage(
+                                      "lib/assets/png/jugadoranonimo.png"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -133,85 +143,121 @@ class PlayerSoccerWidget extends LocalRootWidget<PlayerSoccerViewModel> {
                         ],
                       ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(height: 16.dp),
-              Container(
-                color: Colors.black.withOpacity(0.5),
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'ESTADÍSTICAS DE TEMPORADA 2024 MLS',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildStatColumn('TIT (SUP)', '11 (1)'),
-                        _buildStatColumn('G', '12'),
-                        _buildStatColumn('A', '13'),
-                        _buildStatColumn('TT', '58'),
-                      ],
-                    ),
                   ],
                 ),
-              ),
-              const Spacer(),
-              BottomNavigationBar(
-                items: [
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: 'Perfil de Jugador',
+                SizedBox(height: 16.dp),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black.withOpacity(0.5),
                   ),
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.article),
-                    label: 'Bio',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Colors.white, Colors.blue],
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.dp),
+                            topRight: Radius.circular(10.dp),
+                          ),
+                        ),
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            'ESTADÍSTICAS DE TEMPORADA 2024-25 ${model.fixtures!.leagueName!.toUpperCase()}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.dp,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.dp),
+                      StatisticsRow(
+                          goals: model.playergoals.toString(),
+                          assists: model.playerassists.toString(),
+                          matchplayed: model.playermatchplayed.toString(),
+                          substitutes: model.playersubstitutes.toString(),
+                          rating: model.playerrating.value == "0"
+                              ? model.playerrating.value
+                              : "0"),
+                      SizedBox(height: 10.dp),
+                      Divider(thickness: 2.dp),
+                    
+                    ],
+                    
                   ),
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.fiber_new),
-                    label: 'Noticias',
-                  ),
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.calendar_today),
-                    label: 'Partidos',
-                  ),
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.bar_chart),
-                    label: 'Estadísticas',
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+                ),
+                TabStatisticsPlayerWidget(fixtures: model.player)
+              ],
+            ),
+          );
+        }),
       ),
       model: model,
       context: context,
     );
   }
+}
 
-  Column _buildStatColumn(String label, String value) {
+class StatisticsRow extends StatelessWidget {
+  final String goals;
+  final String assists;
+  final String matchplayed;
+  final String substitutes;
+  final String rating;
+
+  const StatisticsRow(
+      {super.key,
+      required this.goals,
+      required this.assists,
+      required this.matchplayed,
+      required this.substitutes,
+      required this.rating});
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        StatisticsColumn(
+            title: 'TIT (SUP)', value: '${matchplayed} (${substitutes})'),
+        StatisticsColumn(title: 'G', value: goals),
+        StatisticsColumn(title: 'A', value: assists),
+        StatisticsColumn(title: 'CJ', value: rating),
+      ],
+    );
+  }
+}
+
+class StatisticsColumn extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const StatisticsColumn({required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Text(
-          value,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          title,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 14.dp,
           ),
         ),
         Text(
-          label,
-          style: const TextStyle(fontSize: 16, color: Colors.white),
+          value,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16.dp,
+          ),
         ),
       ],
     );

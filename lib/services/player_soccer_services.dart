@@ -33,7 +33,26 @@ class PlaySoccerServices extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> _getJsonDatahplaySoccer(String met, String playerId) async {
+  Future<String> _getJsonDatahplaySoccer(
+      String met, String playerId, String leagueId) async {
+    final url = Uri.https(_baseUrl, '/football/', {
+      'met': met,
+      'leagueId	': leagueId,
+      'playerId': playerId,
+      'APIkey': _apiKey,
+    });
+
+    final response = await http.get(url);
+    try {
+      return response.body;
+    } catch (e) {
+      print("Error fetching data: $e");
+      return "";
+    }
+  }
+
+  Future<String> _getJsonDatahplaySoccerlist(
+      String met, String playerId) async {
     final url = Uri.https(_baseUrl, '/football/', {
       'met': met,
       'playerId': playerId,
@@ -50,9 +69,21 @@ class PlaySoccerServices extends ChangeNotifier {
   }
 
   // lista tabla con parametro de liga
-  Future<List<PlayerSoccer>> fetchplaySoccer(String playerId) async {
+  Future<List<PlayerSoccer>> fetchplaySoccer(
+      String playerId, String leagueId) async {
     await _loadApiKey();
-    final jsonData = await _getJsonDatahplaySoccer('Players', playerId);
+    final jsonData =
+        await _getJsonDatahplaySoccer('Players', playerId, leagueId);
+    final Map<String, dynamic> decodedData = json.decode(jsonData);
+    final apiResponse = PlayerSoccerResponse.fromJson(decodedData);
+    return apiResponse.result;
+  }
+
+  Future<List<PlayerSoccer>> fetchplaySoccerlist(
+    String playerId,
+  ) async {
+    await _loadApiKey();
+    final jsonData = await _getJsonDatahplaySoccerlist('Players', playerId);
     final Map<String, dynamic> decodedData = json.decode(jsonData);
     final apiResponse = PlayerSoccerResponse.fromJson(decodedData);
     return apiResponse.result;
